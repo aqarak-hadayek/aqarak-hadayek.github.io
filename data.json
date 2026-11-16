@@ -18,6 +18,95 @@
    "grade": null,
    "added": "2026-11-16",
    "hidden": false,
+   "gate": "البوابة الأولى",
+   "rooms": 3,
+   "baths": 2,
+   "zone": "منطقة د",
+   "area": 170,
+   "floor": 2,
+   "price": 3000000,
+   "pnote": "السعر نهائي",
+   "meters": [
+    [
+     "الكهربا",
+     "عداد",
+     "ok"
+    ],
+    [
+     "الغاز",
+     "عداد قديم",
+     "ok"
+    ],
+    [
+     "المياه",
+     "عداد",
+     "ok"
+    ]
+   ],
+   "feats": [
+    "واجهة",
+    "أسانسير",
+    "ريسبشن 3 قطع",
+    "تحميل قديم"
+   ],
+   "desc": "شقة 170 متر واجهة تحميل قديم، خطوات من الشارع الرئيسي، في الدور التاني بأسانسير. 3 غرف نوم وريسبشن 3 قطع و2 حمام، كاملة العدادات.",
+   "code": "HS-220",
+   "imgs": [
+    "img/HS-220/01.jpg",
+    "img/HS-220/02.jpg",
+    "img/HS-220/03.jpg",
+    "img/HS-220/04.jpg",
+    "img/HS-220/05.jpg",
+    "img/HS-220/06.jpg",
+    "img/HS-220/07.jpg"
+   ],
+   "video": "vid/HS-220.mp4",
+   "framed": true
+  },
+  {
+   "deal": "sale",
+   "kind": "شقة",
+   "finish": null,
+   "grade": null,
+   "added": "2026-11-16",
+   "hidden": false,
+   "gate": "البوابة الأولى",
+   "rooms": 3,
+   "baths": 2,
+   "zone": "منطقة أ",
+   "area": 200,
+   "floor": 1,
+   "price": 2700000,
+   "pnote": "السعر نهائي",
+   "meters": [],
+   "feats": [
+    "واجهة",
+    "على الشارع الرئيسي",
+    "أسانسير",
+    "ريسبشن 3 قطع",
+    "تحميل قديم"
+   ],
+   "desc": "شقة 200 متر واجهة تحميل قديم على الشارع الرئيسي، في الدور الأول بأسانسير. 3 غرف نوم وريسبشن 3 قطع و2 حمام.",
+   "code": "HS-219",
+   "imgs": [
+    "img/HS-219/01.jpg",
+    "img/HS-219/02.jpg",
+    "img/HS-219/03.jpg",
+    "img/HS-219/04.jpg",
+    "img/HS-219/05.jpg",
+    "img/HS-219/06.jpg",
+    "img/HS-219/07.jpg"
+   ],
+   "video": "vid/HS-219.mp4",
+   "framed": true
+  },
+  {
+   "deal": "sale",
+   "kind": "شقة",
+   "finish": null,
+   "grade": null,
+   "added": "2026-11-16",
+   "hidden": false,
    "code": "HS-218",
    "zone": "منطقة أ",
    "gate": "البوابة الأولى",
@@ -1066,6 +1155,20 @@
   "img/HS-218/13.jpg": "ef80eff8e7b8f618e456698f3f8dfe1f9cf331fe21fe83fc03f817f81ff81ff0",
   "img/HS-218/14.jpg": "c3b2c79385f00d1b04178407b001f800d8006c085808300c3006000200030001",
   "img/HS-218/15.jpg": "0e8b0e0b0e0b8e0b5caa1f9a146e18601e0463c067b93c79207c027f02b802dc",
-  "img/HS-218/16.jpg": "03f8e6f3e673af33c180c1b2c130bd11cf034e3f4c1ff81fd9c685878c464c0e"
+  "img/HS-218/16.jpg": "03f8e6f3e673af33c180c1b2c130bd11cf034e3f4c1ff81fd9c685878c464c0e",
+  "img/HS-219/01.jpg": "e00ce03cf07cf07ce383e7e393e492ac98f30fc70f7e0ff84dc23dc1fd073e6a",
+  "img/HS-219/02.jpg": "80f881f083e003e0f263d23f9a3f9a3e02383672187ef83df1df8476039f00e7",
+  "img/HS-219/03.jpg": "c000e7047ce01c733883b1631903d98bf387f3e783fd83a77a3b60ade2af621b",
+  "img/HS-219/04.jpg": "31f031f0b1e0b83fb80c183c5c7c49c1890f899883c083c003e043e043e0c3f0",
+  "img/HS-219/05.jpg": "0001000304033e833c872d8729cf398f7b1f121f80bf703fcc3973b01cf81c7f",
+  "img/HS-219/06.jpg": "0700020006000f993d199d199d139d13cf1303f31fefe7f10ff1bfc0ff81ce00",
+  "img/HS-219/07.jpg": "0f0003000003181f2c7f247e245e0c5e4f8f3f133e387c38f07ce074c33682bc",
+  "img/HS-220/01.jpg": "fdc0fe00bfc09cc38cd28ad288d688f68c3e8c168f868f06cfc3fc41f083f8e1",
+  "img/HS-220/02.jpg": "54000e0279835c837833703370333c230d23040f7e0abc189c19000dbc08a818",
+  "img/HS-220/03.jpg": "7e3b7e3b5e9b5c9b689369b769b749b749b769b769b7617f237f607f605f013f",
+  "img/HS-220/04.jpg": "0019003b007b407102640064006086c0106010c40985018101c13fc158090809",
+  "img/HS-220/05.jpg": "0fff1fff0c7f01ff11bf11be119c1999700f843c1c351e351ea51fc077c0ffd8",
+  "img/HS-220/06.jpg": "fe84f8f8f5c071837cdb72db72da70db71bb703378177f877e077c877fc37c01",
+  "img/HS-220/07.jpg": "600ff03ff03fe18fe067e067f067784f388e3838e07739831fc03cf80db013f8"
  }
 }

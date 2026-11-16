@@ -4,290 +4,285 @@
 <meta charset="utf-8">
 <meta name="description" content="عقارك: شقق للإيجار والتمليك في حدايق الأهرام بالصور والفيديو وكل التفاصيل.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>عقارك | شقق إيجار وتمليك في حدايق الأهرام</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#ffffff">
+<title>عقارك</title>
 <style>
-/* Layout idea: a black and white listing board, single dark theme by choice.
-   The only color is the champagne key tag that carries the apartment code. */
+/* Product UI, not a landing page: system fonts, light surface, one brand blue,
+   dense listing cards, a search box up top and an app-style tab bar on phones. */
 :root{
+  --bg:#f4f5f7; --surface:#ffffff; --ink:#1b2330; --muted:#667085; --line:#e3e6eb;
+  --brand:#1557d6; --brand-ink:#ffffff; --brand-soft:#e9f0fd;
+  --wa:#128c4a; --wa-ink:#ffffff; --heart:#e5484d;
+  --good:#17703f; --good-bg:#e3f4ea; --warn:#8a5a00; --warn-bg:#fdf0d5;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.05);
+  --font:system-ui,-apple-system,"Segoe UI","Noto Sans Arabic","Geeza Pro",Tahoma,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0f1318; --surface:#181d24; --ink:#e9edf2; --muted:#98a2b3; --line:#2a313b;
+    --brand:#6c9bf5; --brand-ink:#0b1220; --brand-soft:#1b2942;
+    --wa:#2fbf71; --wa-ink:#06210f; --heart:#ff6b6f;
+    --good:#7ad3a0; --good-bg:#15301f; --warn:#f0c36a; --warn-bg:#35290f;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
   color-scheme:dark;
-  --bg:#0a0a0b;
-  --surface:#141416;
-  --ink:#f6f5f1;
-  --muted:#a09f9a;
-  --line:#2a2a2e;
-  --brand:#ffffff;
-  --brand-ink:#0a0a0b;
-  --tag:#d9b872;
-  --tag-ink:#1b1404;
-  --good:#8fd6ab;
-  --good-bg:#15291e;
-  --warn:#e6c07a;
-  --warn-bg:#2b2413;
-  --font-display:"Alexandria","IBM Plex Sans Arabic",Tahoma,sans-serif;
-  --font-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
-  --radius:14px;
+  --bg:#0f1318; --surface:#181d24; --ink:#e9edf2; --muted:#98a2b3; --line:#2a313b;
+  --brand:#6c9bf5; --brand-ink:#0b1220; --brand-soft:#1b2942;
+  --wa:#2fbf71; --wa-ink:#06210f; --heart:#ff6b6f;
+  --good:#7ad3a0; --good-bg:#15301f; --warn:#f0c36a; --warn-bg:#35290f;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box}
 [hidden]{display:none !important}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.7}
-a{color:inherit}
-button,select{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--tag);outline-offset:2px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.6;-webkit-text-size-adjust:100%}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+.ic{width:1.1em;height:1.1em;flex:none;vertical-align:-.18em}
 
 /* header */
-.top{background:var(--bg);color:var(--ink);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
-.logo{font-family:var(--font-display);font-weight:700;font-size:1.15rem;text-decoration:none;display:flex;align-items:center;gap:10px}
-.logo::before{content:"";width:10px;height:10px;background:var(--tag);transform:rotate(45deg)}
-.top .call{display:flex;align-items:center;gap:10px;font-size:.92rem}
-.top .call a{background:var(--brand);color:var(--brand-ink);text-decoration:none;font-weight:600;padding:6px 14px;border-radius:999px}
-.demo{background:var(--surface);color:var(--muted);border-bottom:1px solid var(--line);font-size:.88rem;text-align:center;padding:6px 16px}
+.top{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top .wrap{display:flex;align-items:center;gap:18px;height:56px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.25rem;color:var(--brand)}
+.brand .ic{width:26px;height:26px}
+.nav{display:flex;gap:4px;margin-inline-start:8px}
+.nav a{padding:6px 12px;border-radius:8px;color:var(--muted);font-weight:600;font-size:.93rem}
+.nav a:hover{background:var(--bg);color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--brand);background:var(--brand-soft)}
+.top .sp{flex:1}
+.callbtn{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-weight:600;font-size:.9rem;direction:ltr}
+.wabtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--wa);color:var(--wa-ink);border-radius:8px;padding:7px 14px;font-weight:700;font-size:.9rem;border:0;cursor:pointer}
+.notice{background:var(--warn-bg);color:var(--warn);font-size:.85rem;text-align:center;padding:5px 16px}
 
-/* hero */
-.hero{padding:36px 0 8px}
-.hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.7rem,4.6vw,2.7rem);line-height:1.35;margin:0 0 8px;text-wrap:balance}
-.hero p{margin:0;color:var(--muted);max-width:60ch}
+/* search box */
+.search{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:18px;margin:18px 0 6px}
+.search h1{font-size:1.25rem;font-weight:800;margin:0 0 12px;line-height:1.4}
+.seg{display:inline-flex;background:var(--bg);border-radius:10px;padding:3px;margin-bottom:12px}
+.seg button{border:0;background:transparent;padding:7px 26px;border-radius:8px;font-weight:700;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--brand);box-shadow:var(--shadow)}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:10px;align-items:end}
+@media (max-width:760px){.fields{grid-template-columns:1fr 1fr}.fields .go{grid-column:1/-1}}
+.f{display:flex;flex-direction:column;gap:3px;font-size:.8rem;color:var(--muted);min-width:0}
+.f select,.f input{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 10px;color:var(--ink);width:100%;font-size:.93rem}
+.go{background:var(--brand);color:var(--brand-ink);border:0;border-radius:8px;padding:10px 22px;font-weight:700;cursor:pointer;text-align:center}
 
-/* chooser */
-.choose{padding:44px 0 56px}
-.choose h1{font-family:var(--font-display);font-weight:800;font-size:clamp(1.8rem,5vw,2.9rem);line-height:1.35;margin:0 0 6px;text-wrap:balance}
-.choose > p{margin:0 0 26px;color:var(--muted)}
-.doors{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.door{display:flex;flex-direction:column;gap:8px;text-decoration:none;background:linear-gradient(160deg,var(--surface),var(--bg));border:1px solid var(--line);border-radius:20px;padding:26px 24px 22px;transition:transform .15s ease,border-color .15s ease}
-.door:hover{transform:translateY(-3px);border-color:var(--tag)}
-.door strong{font-family:var(--font-display);font-weight:800;font-size:2rem;line-height:1.3}
-.door span{color:var(--muted)}
-.door em{font-style:normal;align-self:flex-start;margin-top:10px;background:var(--brand);color:var(--brand-ink);font-weight:600;padding:8px 18px;border-radius:999px}
-.door.sale em{background:var(--tag);color:var(--tag-ink)}
-.switch{display:inline-block;margin-top:10px;font-weight:600;color:var(--tag)}
-@media (prefers-reduced-motion:reduce){.door{transition:none}.door:hover{transform:none}}
+/* sections */
+.sec{margin:26px 0}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.sec-h h2{font-size:1.1rem;font-weight:800;margin:0}
+.sec-h a{color:var(--brand);font-weight:600;font-size:.9rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.9rem;cursor:pointer}
+.chip:hover{border-color:var(--brand);color:var(--brand)}
+.chip b{color:var(--muted);font-weight:500;margin-inline-start:4px}
+.crumbs{font-size:.82rem;color:var(--muted);margin:14px 0 8px}
+.crumbs a{color:var(--brand)}
+.lhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:10px}
+.lhead h1{font-size:1.2rem;font-weight:800;margin:0}
+.lhead h1 small{font-weight:500;color:var(--muted);font-size:.85rem;margin-inline-start:6px}
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:14px}
+.fbar select{background:var(--bg);border:1px solid transparent;border-radius:8px;padding:7px 8px;font-size:.88rem;max-width:100%}
+.fbar .sp{flex:1}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:32px 16px;text-align:center;color:var(--muted);grid-column:1/-1}
 
-/* filters */
-.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin:22px 0 10px}
-.filters label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted);flex:1 1 150px}
-.filters select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;color:var(--ink)}
-.count{font-size:.92rem;color:var(--muted);margin:0 0 14px}
-
-/* grid + card */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;padding-bottom:48px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform .15s ease, border-color .15s ease}
-.card:hover{transform:translateY(-3px);border-color:var(--tag)}
-.card .ph{aspect-ratio:4/3}
-.card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
-.card .row{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.price{color:var(--ink);font-family:var(--font-display);font-weight:700;font-size:1.2rem;font-variant-numeric:tabular-nums}
-.price small{font-family:var(--font-body);font-weight:400;font-size:.8rem;color:var(--muted)}
-.facts{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:.9rem;margin:0;padding:0;list-style:none}
-.facts b{color:var(--ink);font-weight:600}
-
-/* key tag (apartment code) */
-.keytag{display:inline-flex;align-items:center;gap:8px;background:var(--tag);color:var(--tag-ink);font-family:var(--font-display);font-weight:700;font-size:.85rem;padding:4px 12px 4px 14px;border-radius:6px 999px 999px 6px;letter-spacing:.04em;direction:ltr}
-.keytag::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
-.keytag.big{font-size:1rem;padding:6px 14px 6px 18px}
-
-/* pills */
-.pill{display:inline-block;font-size:.8rem;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--good-bg);color:var(--good);white-space:nowrap}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.card:hover{border-color:var(--brand)}
+.media{position:relative;display:block;aspect-ratio:4/3;background:var(--line)}
+.media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:8px;inset-inline-start:8px;background:var(--brand);color:var(--brand-ink);font-size:.74rem;font-weight:700;padding:2px 9px;border-radius:6px}
+.mcount{position:absolute;bottom:8px;inset-inline-start:8px;display:flex;gap:6px}
+.mcount span{background:rgba(0,0,0,.6);color:#fff;font-size:.74rem;padding:1px 7px;border-radius:6px;display:flex;align-items:center;gap:4px}
+.fav{position:absolute;top:8px;inset-inline-end:8px;z-index:2;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#444;cursor:pointer;display:grid;place-items:center}
+.fav .ic{width:18px;height:18px}
+.fav[aria-pressed="true"]{color:var(--heart)}
+.fav[aria-pressed="true"] .ic{fill:currentColor}
+.fav.inline{position:static;background:var(--surface);border:1px solid var(--line);color:var(--ink);width:38px;height:38px}
+.fav.inline[aria-pressed="true"]{color:var(--heart)}
+.cbody{padding:12px 14px 12px;display:flex;flex-direction:column;gap:5px;flex:1}
+.price{font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums;line-height:1.3}
+.price small{font-weight:500;font-size:.78rem;color:var(--muted)}
+.card h3{font-size:.95rem;font-weight:600;margin:0}
+.card h3 a::after{content:"";position:absolute;inset:0}
+.loc{color:var(--muted);font-size:.84rem;margin:0;display:flex;align-items:center;gap:4px}
+.specs{display:flex;flex-wrap:wrap;gap:4px 14px;list-style:none;margin:4px 0 0;padding:0;font-size:.86rem}
+.specs li{display:flex;align-items:center;gap:5px}
+.specs .ic{color:var(--muted)}
+.cfoot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.ref{font-size:.8rem;color:var(--muted);direction:ltr}
+.cfoot .wabtn{position:relative;z-index:2;padding:5px 12px;font-size:.84rem}
+.pill{display:inline-block;font-size:.78rem;font-weight:600;padding:1px 9px;border-radius:6px;background:var(--good-bg);color:var(--good);white-space:nowrap}
 .pill.warn{background:var(--warn-bg);color:var(--warn)}
-.pill.plain{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
-
-/* placeholder photo */
-.ph{position:relative;display:grid;place-items:center;background:linear-gradient(135deg,hsl(var(--h) 14% 34%),hsl(calc(var(--h) + 30) 12% 16%));color:#fff;overflow:hidden}
-.ph svg{width:46%;max-width:190px;opacity:.85}
-.ph span{position:absolute;inset-inline-start:10px;bottom:8px;font-size:.75rem;background:rgba(0,0,0,.45);padding:1px 9px;border-radius:999px}
-.ph .vid{position:absolute;inset-inline-end:10px;top:10px;bottom:auto;inset-inline-start:auto}
-
-/* floor diagram */
-.floors{display:inline-flex;align-items:center;gap:8px;font-size:.9rem}
-.floors i{display:flex;flex-direction:column-reverse;gap:2px}
-.floors i u{display:block;width:22px;height:4px;border-radius:1px;background:var(--line)}
-.floors i u.on{background:var(--tag)}
+.pill.plain{background:var(--bg);color:var(--muted)}
 
 /* detail */
-.detail{padding:22px 0 56px}
-.back{display:inline-block;margin-bottom:14px;color:var(--muted);text-decoration:none;font-size:.95rem}
-.back:hover{color:var(--ink)}
-.dgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:26px;align-items:start}
-@media (max-width:820px){.dgrid{grid-template-columns:minmax(0,1fr)}}
-.stage{border-radius:var(--radius);aspect-ratio:4/3;width:100%;border:0;padding:0}
-.thumbs{display:flex;gap:8px;margin-top:8px;overflow-x:auto;padding-bottom:4px}
-.thumbs button{flex:0 0 84px;aspect-ratio:4/3;border-radius:8px;border:2px solid transparent;padding:0;cursor:pointer}
-.thumbs button[aria-current="true"]{border-color:var(--tag)}
-.thumbs .ph svg{width:60%}.thumbs .ph span{display:none}
-.info{display:flex;flex-direction:column;gap:18px}
-.info h1{font-family:var(--font-display);font-weight:700;font-size:1.5rem;line-height:1.5;margin:0;text-wrap:balance}
-.info .price{font-size:1.7rem}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:4px 16px}
-.panel h2{font-family:var(--font-display);font-weight:700;font-size:.95rem;margin:12px 0 4px;color:var(--muted)}
-.panel dl{margin:0}
-.panel dl div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
-.panel dl div:first-child{border-top:0}
-.panel dt{color:var(--muted)}
-.panel dd{margin:0;font-weight:600;text-align:end}
-.cta{display:flex;flex-direction:column;gap:6px;background:var(--brand);color:var(--brand-ink);border-radius:var(--radius);padding:16px}
-.cta a{background:var(--tag);color:var(--tag-ink);text-decoration:none;text-align:center;font-family:var(--font-display);font-weight:700;padding:12px;border-radius:10px}
-.cta p{margin:0;font-size:.9rem;text-align:center}
-.empty{background:var(--surface);border:1px dashed var(--line);border-radius:var(--radius);padding:28px;text-align:center;color:var(--muted);grid-column:1/-1}
-footer{border-top:1px solid var(--line);color:var(--muted);font-size:.88rem;padding:18px 0 28px}
-@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}}
-
-/* v2: patterns borrowed from listing portals */
-.filters label{flex:1 1 130px}
-.favtoggle{flex:0 0 auto;align-self:end;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer;color:var(--ink)}
-.favtoggle[aria-pressed="true"]{border-color:var(--tag);color:var(--tag)}
-.card{position:relative}
-.card h3{font-family:var(--font-display);font-weight:700;font-size:1rem;line-height:1.6;margin:0}
-.card h3 a{text-decoration:none}
-.card h3 a::after{content:"";position:absolute;inset:0}
-.card .meta{font-size:.82rem;color:var(--muted)}
-.fav{position:absolute;top:10px;inset-inline-end:10px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:1.15rem;line-height:1;cursor:pointer;display:grid;place-items:center}
-.fav[aria-pressed="true"]{background:var(--tag);color:var(--tag-ink)}
-.fav.inline{position:static;background:var(--surface);border:1px solid var(--line);color:var(--ink)}
-.fav.inline[aria-pressed="true"]{background:var(--tag);color:var(--tag-ink);border-color:var(--tag)}
-.ph .cnt{position:absolute;inset-inline-end:10px;inset-inline-start:auto;bottom:8px}
-.ph .vid{top:auto;bottom:8px;inset-inline-end:74px}
-.gal{position:relative}
-.gal .nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:1.2rem;cursor:pointer}
-.gal .nav.prev{inset-inline-start:10px}.gal .nav.next{inset-inline-end:10px}
-.gal .pos{position:absolute;top:10px;inset-inline-start:10px;background:rgba(0,0,0,.6);color:#fff;font-size:.8rem;padding:1px 10px;border-radius:999px;font-variant-numeric:tabular-nums}
-.keyfacts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.keyfacts div{background:var(--surface);padding:12px 8px;text-align:center}
-.keyfacts b{display:block;font-family:var(--font-display);font-weight:700;font-size:1.25rem;font-variant-numeric:tabular-nums}
-.keyfacts span{font-size:.8rem;color:var(--muted)}
-.desc{margin:0;color:var(--muted);max-width:62ch}
-.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0 0 14px}
-.chips li{border:1px solid var(--line);border-radius:999px;padding:3px 14px;font-size:.88rem}
-.similar{margin-top:40px}
-.similar h2{font-family:var(--font-display);font-weight:700;font-size:1.2rem;margin:0 0 14px}
-.similar .grid{padding-bottom:0}
+.dhead{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px 20px;margin-bottom:12px}
+.dhead h1{font-size:1.3rem;font-weight:800;margin:0;line-height:1.4}
+.dhead .acts{display:flex;gap:8px;align-items:center}
+.dgrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+@media (max-width:900px){.dgrid{grid-template-columns:minmax(0,1fr)}}
+.gal{position:relative;background:#000;border-radius:12px;overflow:hidden}
+.stage{position:relative;aspect-ratio:4/3;max-height:560px;width:100%}
+.stage img,.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.gal .gnav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:#111;cursor:pointer;font-size:1.1rem}
+.gal .prev{inset-inline-start:10px}.gal .next{inset-inline-end:10px}
+.gal .pos{position:absolute;bottom:10px;inset-inline-start:10px;background:rgba(0,0,0,.6);color:#fff;font-size:.78rem;padding:1px 9px;border-radius:6px;font-variant-numeric:tabular-nums}
+.thumbs{display:flex;gap:6px;margin-top:6px;overflow-x:auto;padding-bottom:4px}
+.thumbs button{position:relative;flex:0 0 76px;aspect-ratio:4/3;border-radius:6px;border:2px solid transparent;padding:0;cursor:pointer;overflow:hidden;background:#000}
+.thumbs button img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumbs button b{position:absolute;inset:0;display:grid;place-items:center;color:#fff;background:rgba(0,0,0,.45)}
+.thumbs button[aria-current="true"]{border-color:var(--brand)}
+.note{font-size:.8rem;color:var(--muted);margin:4px 0 0}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:14px}
+.box h2{font-size:1rem;font-weight:800;margin:0 0 10px}
+.box p{margin:0}
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));text-align:center;gap:8px}
+.strip div{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:.84rem;color:var(--muted)}
+.strip .ic{width:22px;height:22px;color:var(--brand)}
+.strip b{color:var(--ink);font-size:1rem}
+.tbl{width:100%;border-collapse:collapse;font-size:.92rem}
+.tbl th{font-weight:500;color:var(--muted);text-align:start;padding:8px 10px;width:40%}
+.tbl td{font-weight:600;padding:8px 10px}
+.tbl tr:nth-child(odd){background:var(--bg)}
+.feats{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px 14px;list-style:none;margin:0;padding:0;font-size:.92rem}
+.feats li{display:flex;align-items:center;gap:6px}
+.feats .ic{color:var(--good)}
+.side{position:sticky;top:72px}
+.side .box{margin-top:0}
+.side .price{font-size:1.5rem}
+.side .btns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.side .wabtn{padding:11px;font-size:1rem}
+.btn2{display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:10px;font-weight:600}
+.btn2:hover{border-color:var(--brand);color:var(--brand)}
+.qlinks{display:flex;flex-direction:column;gap:4px;margin-top:12px;font-size:.88rem}
+.qlinks a{color:var(--brand)}
+.agent{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+.agent i{width:38px;height:38px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-style:normal}
+.agent b{display:block;color:var(--ink)}
 .stick{display:none}
-@media (max-width:820px){
-  .detail{padding-bottom:110px}
-  .stick{display:flex;position:fixed;inset-inline:0;bottom:0;z-index:5;gap:12px;align-items:center;justify-content:space-between;background:var(--surface);border-top:1px solid var(--line);padding:10px 16px}
-  .stick .price{font-size:1.05rem}
-  .stick a{background:var(--brand);color:var(--brand-ink);text-decoration:none;font-family:var(--font-display);font-weight:700;padding:10px 18px;border-radius:10px;white-space:nowrap}
+
+/* request form */
+.req{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:end}
+.req .wide{grid-column:1/-1}
+@media (max-width:760px){.req{grid-template-columns:1fr 1fr}}
+.req .wabtn{grid-column:1/-1;justify-self:start;padding:10px 20px}
+
+footer{background:var(--surface);border-top:1px solid var(--line);margin-top:36px;color:var(--muted);font-size:.88rem}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 40px;padding-block:22px}
+.foot p{margin:6px 0 0;max-width:40ch}
+.foot nav{display:flex;flex-direction:column;gap:4px}
+.foot nav a:hover{color:var(--brand)}
+.foot h4{font-size:.85rem;color:var(--ink);margin:0 0 4px}
+.legal{border-top:1px solid var(--line);padding-block:12px;font-size:.78rem}
+
+/* phone: app tab bar */
+.tabbar{display:none}
+@media (max-width:760px){
+  .nav,.callbtn{display:none}
+  body{padding-bottom:62px}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;inset-inline:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 0 6px;font-size:.7rem;color:var(--muted);font-weight:600}
+  .tabbar a .ic{width:22px;height:22px}
+  .tabbar a[aria-current="page"]{color:var(--brand)}
+  .tabbar a.wa{color:var(--wa)}
+  body.on-detail .tabbar{display:none}
+  .stick{display:flex;position:fixed;inset-inline:0;bottom:0;z-index:30;gap:8px;align-items:center;background:var(--surface);border-top:1px solid var(--line);padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
+  .stick .price{flex:1;font-size:1rem}
+  .stick .btn2{padding:8px 14px}
+  .side{position:static}
+  .strip b{font-size:.92rem}
+  .grid{grid-template-columns:1fr}
+  .dhead h1{font-size:1.1rem}
+  .fbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .fbar select{flex:none}
+  .fbar .sp{display:none}
 }
-@media (max-width:420px){.keyfacts b{font-size:1.05rem}}
-
-/* v3: full site chrome */
-html{scroll-behavior:smooth}
-.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
-.top .wrap{padding-block:12px}
-.nav{display:flex;gap:22px;font-size:.95rem}
-.nav a{text-decoration:none;color:var(--muted);padding:4px 0;border-bottom:1px solid transparent}
-.nav a:hover,.nav a[aria-current="page"]{color:var(--ink);border-color:var(--tag)}
-@media (max-width:720px){.nav{order:3;width:100%;justify-content:center;gap:28px}#phoneText{display:none}}
-.demo{font-size:.8rem;padding:4px 16px}
-.home-hero{position:relative;padding:64px 0 40px;overflow:hidden}
-.home-hero .pyr{position:absolute;inset-inline-end:-40px;bottom:0;width:min(560px,70%);opacity:.5;pointer-events:none}
-.eyebrow{font-size:.85rem;letter-spacing:.02em;color:var(--tag);margin:0 0 14px}
-.home-hero h1{position:relative;font-family:var(--font-display);font-weight:800;font-size:clamp(2rem,5.6vw,3.5rem);line-height:1.3;margin:0 0 14px;max-width:16ch;text-wrap:balance}
-.home-hero .lead{position:relative;color:var(--muted);font-size:1.08rem;max-width:52ch;margin:0 0 30px}
-.home-hero .doors{position:relative;max-width:760px}
-.door{backdrop-filter:blur(4px)}
-.stats{display:flex;flex-wrap:wrap;gap:14px 44px;margin:34px 0 0;padding:22px 0 0;border-top:1px solid var(--line);list-style:none;position:relative}
-.stats b{display:block;font-family:var(--font-display);font-weight:800;font-size:1.9rem;line-height:1.2;font-variant-numeric:tabular-nums}
-.stats span{color:var(--muted);font-size:.9rem}
-.sec{padding:48px 0;border-top:1px solid var(--line)}
-.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:10px 20px;margin-bottom:22px}
-.sec h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.4;margin:0;text-wrap:balance}
-.sec-head a{color:var(--tag);font-weight:600;font-size:.95rem}
-.sec .grid{padding-bottom:0}
-.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-.why div{background:var(--surface);padding:24px 22px}
-.why h3{font-family:var(--font-display);font-weight:700;font-size:1.05rem;margin:0 0 6px}
-.why p{margin:0;color:var(--muted);font-size:.95rem}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;list-style:none;margin:0;padding:0;counter-reset:st}
-.steps li{counter-increment:st;border-top:2px solid var(--tag);padding-top:14px}
-.steps li::before{content:"0" counter(st);display:block;font-family:var(--font-display);font-weight:800;font-size:1.6rem;color:var(--tag);direction:ltr;text-align:end;font-variant-numeric:tabular-nums}
-.steps h3{font-family:var(--font-display);font-weight:700;font-size:1.05rem;margin:4px 0}
-.steps p{margin:0;color:var(--muted);font-size:.95rem}
-.contact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;background:var(--brand);color:var(--brand-ink);border-radius:20px;padding:30px 28px}
-.contact h2{color:inherit}
-.contact p{margin:6px 0 0;opacity:.75}
-.contact .acts{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
-.contact .acts a{background:var(--brand-ink);color:var(--brand);text-decoration:none;font-family:var(--font-display);font-weight:700;padding:12px 24px;border-radius:999px}
-.contact .acts span{font-family:var(--font-display);font-weight:700;font-size:1.15rem}
-footer{padding:0;border-top:1px solid var(--line);margin-top:20px}
-.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px 40px;padding-block:32px}
-.foot .logo{font-size:1.05rem;color:var(--ink)}
-.foot p{margin:8px 0 0;max-width:38ch}
-.foot nav{display:flex;flex-direction:column;gap:6px}
-.foot nav a{text-decoration:none}.foot nav a:hover{color:var(--ink)}
-.foot h4{font-family:var(--font-display);font-size:.85rem;color:var(--ink);margin:0 0 6px}
-.legal{border-top:1px solid var(--line);padding-block:14px;font-size:.8rem}
-.hero{padding:44px 0 8px}
-.ph svg{opacity:.45;width:34%}
-
-/* v4: real media */
-.ph{background:#000}
-.ph img,.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ph.stage{aspect-ratio:1/1}
-.ph.stage img,.ph.stage video{object-fit:contain}
-.thumbs button{position:relative;overflow:hidden;background:#000}
-.thumbs button b{position:absolute;inset:0;display:grid;place-items:center;color:#fff;background:rgba(0,0,0,.45);font-size:1.1rem}
-.note{font-size:.85rem;color:var(--muted);margin:4px 0 0}
-.cta .quick{display:flex;flex-wrap:wrap;gap:8px}
-.cta .quick a{flex:1 1 150px;background:transparent;color:inherit;border:1px solid currentColor;font-family:var(--font-body);font-weight:600;font-size:.9rem;padding:8px}
-.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px;margin-top:16px}
-.req h3{grid-column:1/-1;font-family:var(--font-display);font-size:1.05rem;margin:0}
-.req label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted)}
-.req label.wide{grid-column:1/-1}
-.req input,.req select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;color:var(--ink);font:inherit}
-.req .send{grid-column:1/-1;justify-self:start;background:var(--tag);color:var(--tag-ink);text-decoration:none;font-family:var(--font-display);font-weight:700;padding:11px 24px;border-radius:999px}
+@media (min-width:480px) and (max-width:760px){.grid{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#home">عقارك</a>
-    <nav class="nav" aria-label="القائمة"><a href="#rent" data-nav="rent">إيجار</a><a href="#sale" data-nav="sale">تمليك</a><a href="#contact" data-nav="contact">تواصل معانا</a></nav>
-    <div class="call"><span dir="ltr" id="phoneText"></span><a id="waTop" href="#home">واتساب</a></div>
+    <a class="brand" href="#home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg><span class="bname"></span></a>
+    <nav class="nav" aria-label="القائمة">
+      <a href="#home" data-nav="home">الرئيسية</a><a href="#rent" data-nav="rent">إيجار</a><a href="#sale" data-nav="sale">تمليك</a><a href="#saved" data-nav="saved">المحفوظة</a>
+    </nav>
+    <span class="sp"></span>
+    <a class="callbtn" id="callTop" href="#contact"></a>
+    <a class="wabtn" id="waTop" href="#contact">واتساب</a>
   </div>
 </header>
-<div class="demo" id="notice" hidden></div>
+<div class="notice" id="notice" hidden></div>
 
 <main class="wrap" id="app"></main>
 
 <footer>
   <div class="wrap foot">
-    <div><a class="logo" href="#home">عقارك</a><p id="footText"></p></div>
-    <nav aria-label="روابط"><h4>الشقق</h4><a href="#rent">شقق للإيجار</a><a href="#sale">شقق تمليك</a></nav>
-    <nav aria-label="تواصل"><h4>تواصل</h4><a id="waFoot" href="#contact">واتساب</a><span dir="ltr" id="phoneFoot"></span></nav>
+    <div><a class="brand" href="#home" style="font-size:1.05rem"><span class="bname"></span></a><p id="footText"></p></div>
+    <nav aria-label="روابط"><h4>تصفح</h4><a href="#rent">شقق للإيجار</a><a href="#sale">شقق تمليك</a><a href="#saved">المحفوظة</a></nav>
+    <nav aria-label="تواصل"><h4>تواصل معانا</h4><a id="waFoot" href="#contact">واتساب</a><a id="callFoot" href="#contact" dir="ltr" style="text-align:end"></a></nav>
   </div>
   <div class="wrap legal" id="legal"></div>
 </footer>
 
+<nav class="tabbar" aria-label="تنقل سريع">
+  <a href="#home" data-nav="home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 9.5V21h14V9.5"/></svg>الرئيسية</a>
+  <a href="#rent" data-nav="rent"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/></svg>إيجار</a>
+  <a href="#sale" data-nav="sale"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1M14 8h1M9 12h1M14 12h1M10 21v-4h4v4"/></svg>تمليك</a>
+  <a href="#saved" data-nav="saved"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg>المحفوظة</a>
+  <a href="#contact" class="wa" id="waTab"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.300-4A8 8 0 1 1 8 18.700z"/></svg>واتساب</a>
+</nav>
+
 <script>
 // كل المحتوى بييجي من data.json، وبيتعدّل من لوحة التحكم admin.html
 var SITE = {}, PHONE = "", WA = "", APTS = [];
+var DEAL = {
+  rent:{name:"إيجار", tag:"للإيجار", title:"شقق للإيجار في حدايق الأهرام",
+        caps:[["","أي سعر"],[10000,"لحد 10,000"],[15000,"لحد 15,000"],[20000,"لحد 20,000"]]},
+  sale:{name:"تمليك", tag:"للبيع", title:"شقق تمليك في حدايق الأهرام",
+        caps:[["","أي سعر"],[2000000,"لحد 2 مليون"],[3000000,"لحد 3 مليون"],[3500000,"لحد 3.5 مليون"]]}
+};
+var FLOORS = ["الأرضي","الأول","التاني","التالت","الرابع","الخامس"];
+var SORTS = [["new","الأحدث"],["low","الأقل سعر"],["high","الأعلى سعر"],["big","الأكبر مساحة"]];
+var INTENTS = [["view","عايز أعاين الشقة دي"],["info","عايز تفاصيل أكتر عن الشقة دي"],["price","عايز أعرف السعر قابل للتفاوض ولا لأ"]];
+var P = {
+  bed:'<path d="M3 18V7M3 12h14a4 4 0 0 1 4 4v2M3 16h18M7 12V9h5v3"/>',
+  bath:'<path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM6 12V6a2 2 0 0 1 4 0M7 19l-1 2M17 19l1 2"/>',
+  area:'<path d="M4 4h16v16H4zM4 9h3M4 14h3M9 20v-3M14 20v-3"/>',
+  floor:'<path d="M3 20h4v-4h4v-4h4V8h4V4"/>',
+  pin:'<path d="M12 21s-6-5.500-6-10a6 6 0 0 1 12 0c0 4.500-6 10-6 10z"/><circle cx="12" cy="11" r="2"/>',
+  heart:'<path d="M12 20s-7-4.400-7-10a4 4 0 0 1 7-2.500A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/>',
+  cam:'<path d="M4 8h3l2-2h6l2 2h3v11H4z"/><circle cx="12" cy="13" r="3"/>',
+  play:'<path d="M8 5v14l11-7z"/>',
+  check:'<path d="m5 12 5 5 9-10"/>',
+  phone:'<path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  wa:'<path d="M4 20l1.300-4A8 8 0 1 1 8 18.700z"/>'
+};
+function ic(n){ return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + P[n] + '</svg>'; }
+
 function escAll(v){
   if (typeof v === "string") return v.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
   if (Array.isArray(v)) return v.map(escAll);
   if (v && typeof v === "object") { var o = {}; Object.keys(v).forEach(function(k){ o[k] = escAll(v[k]); }); return o; }
   return v;
 }
+function plain(t){ return String(t).replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&amp;/g,"&"); }
 function daysOf(a){ var d = Math.floor((Date.now() - new Date(a.added + "T00:00:00").getTime()) / 86400000); return isNaN(d) || d < 0 ? 0 : d; }
-function contactHtml(a){
-  if (!PHONE) return '<div class="cta"><p>رقم التواصل هيتضاف قريب.' + (a ? ' احفظ كود الشقة: ' + a.code : '') + '</p></div>';
-  return '<div class="cta"><a href="' + waLink(a, INTENTS[0][1]) + '">احجز معاينة على واتساب</a>'
-    + '<div class="quick">' + INTENTS.slice(1).map(function(x){ return '<a href="' + waLink(a, x[1]) + '">' + (x[0] === "info" ? "اسأل عن تفاصيل أكتر" : "اسأل عن التفاوض في السعر") + '</a>'; }).join("") + '</div>'
-    + '<p>أو اتصل على <span dir="ltr">' + PHONE + '</span> وقول الكود ' + a.code + '</p></div>';
+function ago(d){
+  if (d === 0) return "النهارده";
+  if (d === 1) return "امبارح";
+  if (d === 2) return "من يومين";
+  return "من " + d + (d <= 10 ? " أيام" : " يوم");
 }
-var DEAL = {
-  rent:{name:"إيجار", title:"شقق للإيجار في حدايق الأهرام", other:"sale", otherText:"عايز تمليك؟ شوف شقق البيع",
-        caps:[["","أي سعر"],[10000,"لحد 10,000"],[15000,"لحد 15,000"],[20000,"لحد 20,000"]]},
-  sale:{name:"تمليك", title:"شقق تمليك في حدايق الأهرام", other:"rent", otherText:"عايز إيجار؟ شوف شقق الإيجار",
-        caps:[["","أي سعر"],[2000000,"لحد 2 مليون"],[3000000,"لحد 3 مليون"],[3500000,"لحد 3.5 مليون"]]}
-};
-var FLOORS = ["الأرضي","الأول","التاني","التالت","الرابع","الخامس"];
-var SORTS = [["new","الأحدث"],["low","الأقل سعر"],["high","الأعلى سعر"],["big","الأكبر مساحة"]];
 
-// ---- المحفوظات: بتتحفظ على جهاز العميل نفسه بس ----
+// ---- المحفوظات: على جهاز العميل نفسه بس
 var favs = {};
 try { (JSON.parse(localStorage.getItem("hadayek-favs")) || []).forEach(function(c){ favs[c] = 1; }); } catch (e) {}
 function toggleFav(code){
@@ -298,31 +293,13 @@ function toggleFav(code){
 function money(n){ return n.toLocaleString("en-US"); }
 function slug(a){ return "apt-" + a.code.toLowerCase(); }
 function priceHtml(a){ return money(a.price) + ' <small>' + (a.deal === "rent" ? "جنيه / شهر" : "جنيه") + '</small>'; }
-function where(a){ return a.zone || a.gate || "حدايق الأهرام"; }
-function title(a){ return a.kind + ' ' + a.area + ' متر · ' + where(a); }
-function ago(d){
-  if (d === 0) return "اتضافت النهارده";
-  if (d === 1) return "اتضافت امبارح";
-  if (d === 2) return "من يومين";
-  return "من " + d + (d <= 10 ? " أيام" : " يوم");
-}
-function floorsHtml(f){
-  var bars = "";
-  for (var i = 0; i < FLOORS.length; i++) bars += '<u' + (i === f ? ' class="on"' : '') + '></u>';
-  return '<span class="floors"><i aria-hidden="true">' + bars + '</i>الدور ' + FLOORS[f] + '</span>';
-}
-function finishPill(a){
-  if (a.finish === "new") return '<span class="pill">سكن أول</span>';
-  if (a.grade) return '<span class="pill plain">' + a.grade + '</span>';
-  return '';
-}
-var INTENTS = [["view","عايز أعاين الشقة دي"],["info","عايز تفاصيل أكتر عن الشقة دي"],["price","عايز أعرف السعر قابل للتفاوض ولا لأ"]];
-function plain(t){ return String(t).replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&amp;/g,"&"); }
+function title(a){ return a.kind + ' ' + a.area + ' متر' + (a.rooms ? '، ' + a.rooms + ' غرف' : ''); }
+function place(a){ return [a.zone, a.gate, "حدايق الأهرام"].filter(Boolean).join("، "); }
 function waText(t){ return "https://wa.me/" + WA + "?text=" + encodeURIComponent(plain(t)); }
 function waLink(a, intent){
   if (!a) return waText(SITE.waGeneral || "عايز أستفسر عن شقة في حدايق الأهرام");
   var tpl = SITE.waListing || "{intent}\nكود الشقة: {code} ({deal})";
-  var map = {intent:intent || "عايز أستفسر عن الشقة دي", code:a.code, deal:DEAL[a.deal].name, title:title(a),
+  var map = {intent:intent || "عايز أستفسر عن الشقة دي", code:a.code, deal:DEAL[a.deal].name, title:title(a) + " · " + (a.zone || a.gate || ""),
              price:money(a.price) + (a.deal === "rent" ? " جنيه في الشهر" : " جنيه"), link:location.href.split("#")[0] + "#" + slug(a)};
   return waText(tpl.replace(/\{(\w+)\}/g, function(m, k){ return map[k] === undefined ? m : map[k]; }));
 }
@@ -337,211 +314,203 @@ function requestLink(){
 }
 function favBtn(a, inline){
   var on = !!favs[a.code];
-  return '<button type="button" class="fav' + (inline ? " inline" : "") + '" data-fav="' + a.code + '" aria-pressed="' + on + '" aria-label="' + (on ? "شيل من المحفوظة" : "احفظ الشقة") + '">' + (on ? "♥" : "♡") + '</button>';
+  return '<button type="button" class="fav' + (inline ? " inline" : "") + '" data-fav="' + a.code + '" aria-pressed="' + on + '" aria-label="' + (on ? "شيل من المحفوظة" : "احفظ الشقة") + '">' + ic("heart") + '</button>';
 }
 function cardHtml(a){
   return '<article class="card">'
-    + '<div class="ph">' + (a.imgs[0] ? '<img src="' + a.imgs[0] + '" alt="' + title(a) + '" loading="lazy">' : '') + ''
-    + (a.video ? '<span class="vid">فيديو</span>' : '') + '<span class="cnt">' + a.imgs.length + ' صور</span></div>'
+    + '<div class="media">' + (a.imgs[0] ? '<img src="' + a.imgs[0] + '" alt="" loading="lazy">' : '')
+    + '<span class="tag">' + DEAL[a.deal].tag + '</span>'
+    + '<span class="mcount"><span>' + ic("cam") + a.imgs.length + '</span>' + (a.video ? '<span>' + ic("play") + 'فيديو</span>' : '') + '</span></div>'
     + favBtn(a)
-    + '<div class="body">'
-    + '<div class="row"><span class="keytag">' + a.code + '</span><span class="meta">' + ago(daysOf(a)) + '</span></div>'
+    + '<div class="cbody">'
     + '<div class="price">' + priceHtml(a) + '</div>'
     + '<h3><a href="#' + slug(a) + '">' + title(a) + '</a></h3>'
-    + '<ul class="facts"><li><b>' + a.area + '</b> متر</li><li><b>' + a.rooms + '</b> غرف</li><li><b>' + a.baths + '</b> حمام</li></ul>'
-    + '<div class="row">' + (a.floor === null ? '<span class="meta">' + (a.gate || "") + '</span>' : floorsHtml(a.floor)) + finishPill(a) + '</div>'
+    + '<p class="loc">' + ic("pin") + place(a) + '</p>'
+    + '<ul class="specs"><li>' + ic("bed") + a.rooms + ' غرف</li><li>' + ic("bath") + a.baths + ' حمام</li><li>' + ic("area") + a.area + ' م²</li>'
+    + (a.floor !== null ? '<li>' + ic("floor") + (a.floor === 0 ? "أرضي" : "دور " + a.floor) + '</li>' : '') + '</ul>'
+    + '<div class="cfoot"><span class="ref">' + a.code + '</span>'
+    + (PHONE ? '<a class="wabtn" href="' + waLink(a) + '">' + ic("wa") + 'واتساب</a>' : '<span class="ref" dir="rtl">' + ago(daysOf(a)) + '</span>') + '</div>'
     + '</div></article>';
 }
+function options(list, cur){
+  return list.map(function(o){ return '<option value="' + o[0] + '"' + (String(o[0]) === String(cur) ? " selected" : "") + '>' + o[1] + '</option>'; }).join("");
+}
+function facets(list){
+  var zones = [], rooms = [];
+  list.forEach(function(a){ if (a.zone && zones.indexOf(a.zone) < 0) zones.push(a.zone); if (rooms.indexOf(a.rooms) < 0) rooms.push(a.rooms); });
+  return {zones:zones.sort(), rooms:rooms.sort()};
+}
+function match(a){
+  return a.deal === state.deal && (!state.zone || a.zone === state.zone) && (!state.rooms || String(a.rooms) === state.rooms)
+    && (!state.finish || a.finish === state.finish) && (!state.cap || a.price <= +state.cap);
+}
+function fresh(deal){ return {deal:deal, zone:"", rooms:"", finish:"", cap:"", sort:"new"}; }
+var state = fresh("rent"), view = "home", current = null, keep = false;
 
-var state = {deal:"rent", zone:"", rooms:"", finish:"", cap:"", sort:"new", favOnly:false};
-var current = null, view = "home";
-
+// ---- الرئيسية
 function renderHome(){
-  current = null; view = "home";
-  function of(d){ return APTS.filter(function(a){ return a.deal === d; }); }
-  var zones = {}; APTS.forEach(function(a){ if (a.zone) zones[a.zone] = 1; });
-  var latest = APTS.slice().sort(function(x, y){ return daysOf(x) - daysOf(y) || (x.framed ? 1 : 0) - (y.framed ? 1 : 0) || y.imgs.length - x.imgs.length; }).slice(0, 3);
+  view = "home"; current = null;
+  var of = APTS.filter(function(a){ return a.deal === state.deal; }), F = facets(of);
+  var zc = {}; APTS.forEach(function(a){ if (a.zone) zc[a.zone] = (zc[a.zone] || 0) + 1; });
+  var latest = APTS.slice().sort(function(x, y){ return daysOf(x) - daysOf(y) || (x.framed ? 1 : 0) - (y.framed ? 1 : 0) || y.imgs.length - x.imgs.length; }).slice(0, 6);
   document.getElementById("app").innerHTML =
-    '<section class="home-hero">'
-    + '<svg class="pyr" viewBox="0 0 560 240" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true" style="color:var(--tag)">'
-    + '<path d="M0 239h560M40 239 190 60l150 179M190 60l46 179M250 239 380 96l130 143M380 96l34 143M420 239l70-78 70 78M490 161l18 78"/></svg>'
-    + '<p class="eyebrow">' + SITE.eyebrow + '</p>'
-    + '<h1>' + SITE.heroTitle + '</h1>'
-    + '<p class="lead">' + SITE.heroLead + '</p>'
-    + '<div class="doors">'
-    + '<a class="door" href="#rent"><strong>إيجار</strong><span>شقق بإيجار شهري، ' + of("rent").length + ' متاحة</span><em>شوف شقق الإيجار</em></a>'
-    + '<a class="door sale" href="#sale"><strong>تمليك</strong><span>شقق للبيع، ' + of("sale").length + ' متاحة</span><em>شوف شقق التمليك</em></a>'
-    + '</div>'
-    + '<ul class="stats"><li><b>' + of("rent").length + '</b><span>للإيجار</span></li><li><b>' + of("sale").length + '</b><span>تمليك</span></li><li><b>' + Object.keys(zones).length + '</b><span>مناطق جوه حدايق الأهرام</span></li></ul>'
-    + '</section>'
-    + '<section class="sec"><div class="sec-head"><h2>أحدث الشقق</h2><span><a href="#rent">كل الإيجار</a> &nbsp;·&nbsp; <a href="#sale">كل التمليك</a></span></div>'
-    + '<div class="grid">' + latest.map(cardHtml).join("") + '</div></section>'
-    + '<section class="sec"><div class="sec-head"><h2>كل اللي محتاج تعرفه، مكتوب في صفحة الشقة</h2></div><div class="why">'
-    + '<div><h3>تفاصيل كاملة</h3><p>المساحة، الغرف، الدور، التشطيب، والعدادات المتاحة، مع صور وفيديو من جوه الشقة.</p></div>'
-    + '<div><h3>كود لكل شقة</h3><p>كل شقة ليها كود واضح. قوله لنا ونعرف فوراً إنت بتسأل عن أنهي واحدة.</p></div>'
-    + '<div><h3>تواصل مباشر</h3><p>زرار واتساب في كل صفحة بيبعت رسالة جاهزة فيها كود الشقة، من غير تسجيل.</p></div>'
-    + '</div></section>'
-    + '<section class="sec"><div class="sec-head"><h2>من الموقع للمعاينة في 3 خطوات</h2></div><ol class="steps">'
-    + '<li><h3>اختار</h3><p>حدّد إيجار ولا تمليك، وفلتر بالمنطقة والسعر وعدد الغرف.</p></li>'
-    + '<li><h3>ابعت الكود</h3><p>دوس على واتساب من صفحة الشقة، والكود هيتبعت لوحده.</p></li>'
-    + '<li><h3>عاين</h3><p>نتفق على ميعاد وتنزل تشوف الشقة على الطبيعة.</p></li>'
-    + '</ol></section>'
-    + '<section class="sec" id="contact"><div class="contact"><div><h2>' + SITE.contactTitle + '</h2><p>' + SITE.contactLead + '</p></div>'
-    + (PHONE ? '<div class="acts"><span dir="ltr">' + PHONE + '</span><a href="' + waLink(null) + '">كلّمنا على واتساب</a></div>' : '<div class="acts"><span>رقم التواصل هيتضاف قريب</span></div>') + '</div>'
-    + (PHONE ? '<form class="req" id="req"><h3>أو ابعت طلبك جاهز</h3>'
-      + '<label for="r-deal">عايز<select id="r-deal"><option>إيجار</option><option>تمليك</option></select></label>'
-      + '<label for="r-rooms">عدد الغرف<select id="r-rooms"><option value="">أي عدد</option><option>2</option><option>3</option><option>4 أو أكتر</option></select></label>'
-      + '<label for="r-zone">المنطقة أو البوابة<input id="r-zone" placeholder="مثلاً منطقة ط"></label>'
-      + '<label for="r-budget">الميزانية<input id="r-budget" placeholder="مثلاً لحد 3 مليون"></label>'
-      + '<label for="r-note" class="wide">ملاحظات<input id="r-note" placeholder="دور معين، أسانسير، قرب خدمات..."></label>'
-      + '<a class="send" id="r-send" href="' + waLink(null) + '">ابعت الطلب على واتساب</a></form>' : '')
-    + '</section>';
+    '<section class="search"><h1>' + (SITE.heroTitle || "دوّر على شقتك في حدايق الأهرام") + '</h1>'
+    + '<div class="seg" role="group" aria-label="نوع العرض"><button type="button" data-deal="rent" aria-pressed="' + (state.deal === "rent") + '">إيجار</button><button type="button" data-deal="sale" aria-pressed="' + (state.deal === "sale") + '">تمليك</button></div>'
+    + '<form class="fields" id="hs">'
+    + '<label class="f" for="h-zone">المنطقة<select id="h-zone" name="zone">' + options([["","كل المناطق"]].concat(F.zones.map(function(z){ return [z, z]; })), state.zone) + '</select></label>'
+    + '<label class="f" for="h-rooms">الغرف<select id="h-rooms" name="rooms">' + options([["","أي عدد"]].concat(F.rooms.map(function(r){ return [r, r + " غرف"]; })), state.rooms) + '</select></label>'
+    + '<label class="f" for="h-cap">السعر<select id="h-cap" name="cap">' + options(DEAL[state.deal].caps, state.cap) + '</select></label>'
+    + '<a class="go" id="h-go" href="#' + state.deal + '">عرض ' + APTS.filter(match).length + ' شقة</a>'
+    + '</form></section>'
+    + '<section class="sec"><div class="sec-h"><h2>أحدث العروض</h2><a href="#sale">عرض الكل</a></div><div class="grid">' + latest.map(cardHtml).join("") + '</div></section>'
+    + '<section class="sec"><div class="sec-h"><h2>تصفح حسب المنطقة</h2></div><div class="chips">'
+    + Object.keys(zc).sort().map(function(z){ return '<button type="button" class="chip" data-zone="' + z + '">' + z + '<b>' + zc[z] + '</b></button>'; }).join("") + '</div></section>'
+    + '<section class="sec" id="contact"><div class="sec-h"><h2>' + (SITE.contactTitle || "مش لاقي اللي بتدوّر عليه؟") + '</h2></div><div class="box" style="margin-top:0">'
+    + '<p style="color:var(--muted);margin-bottom:12px">' + (SITE.contactLead || "") + '</p>'
+    + (PHONE ? '<form class="req" id="req">'
+      + '<label class="f" for="r-deal">عايز<select id="r-deal"><option>إيجار</option><option>تمليك</option></select></label>'
+      + '<label class="f" for="r-rooms">عدد الغرف<select id="r-rooms"><option value="">أي عدد</option><option>2</option><option>3</option><option>4 أو أكتر</option></select></label>'
+      + '<label class="f" for="r-zone">المنطقة أو البوابة<input id="r-zone" placeholder="مثلاً منطقة ط"></label>'
+      + '<label class="f" for="r-budget">الميزانية<input id="r-budget" placeholder="مثلاً لحد 3 مليون"></label>'
+      + '<label class="f wide" for="r-note">ملاحظات<input id="r-note" placeholder="دور معين، أسانسير، قرب خدمات"></label>'
+      + '<a class="wabtn" id="r-send" href="' + waLink(null) + '">' + ic("wa") + 'ابعت الطلب على واتساب</a></form>'
+      : '<p>رقم التواصل هيتضاف قريب.</p>')
+    + '</div></section>';
+  var app = document.getElementById("app");
+  app.querySelector(".seg").addEventListener("click", function(e){ var d = e.target.dataset.deal; if (d && d !== state.deal) { state = fresh(d); renderHome(); } });
+  document.getElementById("hs").addEventListener("change", function(e){ state[e.target.name] = e.target.value; document.getElementById("h-go").textContent = "عرض " + APTS.filter(match).length + " شقة"; });
+  document.getElementById("h-go").addEventListener("click", function(){ keep = true; });
+  app.querySelector(".chips").addEventListener("click", function(e){
+    var b = e.target.closest("[data-zone]"); if (!b) return;
+    var z = plain(b.dataset.zone), d = APTS.some(function(a){ return a.zone === b.dataset.zone && a.deal === "sale"; }) ? "sale" : "rent";
+    state = fresh(d); state.zone = b.dataset.zone; keep = true; location.hash = d;
+  });
   var rf = document.getElementById("req");
   if (rf) { var upd = function(){ document.getElementById("r-send").href = requestLink(); }; rf.addEventListener("input", upd); rf.addEventListener("submit", function(e){ e.preventDefault(); }); upd(); }
 }
 
-function options(list, cur){
-  return list.map(function(o){ return '<option value="' + o[0] + '"' + (String(o[0]) === String(cur) ? " selected" : "") + '>' + o[1] + '</option>'; }).join("");
-}
+// ---- القوايم
 function renderList(){
-  current = null; view = "list";
-  var zones = [], rooms = [], D = DEAL[state.deal];
-  var ALL = APTS.filter(function(a){ return a.deal === state.deal; });
-  ALL.forEach(function(a){ if (a.zone && zones.indexOf(a.zone) < 0) zones.push(a.zone); if (rooms.indexOf(a.rooms) < 0) rooms.push(a.rooms); });
-  zones.sort(); rooms.sort();
-  var list = ALL.filter(function(a){
-    return (!state.zone || a.zone === state.zone)
-        && (!state.rooms || String(a.rooms) === state.rooms)
-        && (!state.finish || a.finish === state.finish)
-        && (!state.cap || a.price <= +state.cap)
-        && (!state.favOnly || favs[a.code]);
-  });
+  view = "list"; current = null;
+  var D = DEAL[state.deal], F = facets(APTS.filter(function(a){ return a.deal === state.deal; }));
+  var list = APTS.filter(match);
   list.sort(function(x, y){
     if (state.sort === "low") return x.price - y.price;
     if (state.sort === "high") return y.price - x.price;
     if (state.sort === "big") return y.area - x.area;
-    return daysOf(x) - daysOf(y);
+    return daysOf(x) - daysOf(y) || (x.framed ? 1 : 0) - (y.framed ? 1 : 0) || y.imgs.length - x.imgs.length;
   });
-  var nf = ALL.filter(function(a){ return favs[a.code]; }).length;
   document.getElementById("app").innerHTML =
-    '<section class="hero"><h1>' + D.title + '</h1>'
-    + '<p>كل شقة بصورها وتفاصيلها: المساحة، التشطيب، العدادات، المنطقة والدور. اختار اللي يناسبك وابعتلنا كودها.</p>'
-    + '<a class="switch" href="#' + D.other + '">' + D.otherText + '</a></section>'
-    + '<form class="filters" id="filters">'
-    + '<label for="f-zone">المنطقة<select id="f-zone" name="zone">' + options([["","كل المناطق"]].concat(zones.map(function(z){return [z,z];})), state.zone) + '</select></label>'
-    + '<label for="f-rooms">عدد الغرف<select id="f-rooms" name="rooms">' + options([["","أي عدد"]].concat(rooms.map(function(r){return [r, r + " غرف"];})), state.rooms) + '</select></label>'
-    + '<label for="f-cap">السعر<select id="f-cap" name="cap">' + options(D.caps, state.cap) + '</select></label>'
-    + '<label for="f-finish">التشطيب<select id="f-finish" name="finish">' + options([["","الكل"],["new","سكن أول بس"]], state.finish) + '</select></label>'
-    + '<label for="f-sort">الترتيب<select id="f-sort" name="sort">' + options(SORTS, state.sort) + '</select></label>'
-    + '<button type="button" class="favtoggle" id="f-fav" aria-pressed="' + state.favOnly + '">♥ المحفوظة (' + nf + ')</button>'
+    '<p class="crumbs"><a href="#home">الرئيسية</a> ‹ ' + D.name + '</p>'
+    + '<div class="lhead"><h1>' + D.title + '<small>' + list.length + ' نتيجة</small></h1></div>'
+    + '<form class="fbar" id="filters">'
+    + '<select name="zone" id="f-zone" aria-label="المنطقة">' + options([["","كل المناطق"]].concat(F.zones.map(function(z){ return [z, z]; })), state.zone) + '</select>'
+    + '<select name="rooms" id="f-rooms" aria-label="عدد الغرف">' + options([["","كل الغرف"]].concat(F.rooms.map(function(r){ return [r, r + " غرف"]; })), state.rooms) + '</select>'
+    + '<select name="cap" id="f-cap" aria-label="السعر">' + options(D.caps, state.cap) + '</select>'
+    + '<select name="finish" id="f-finish" aria-label="السكن">' + options([["","أي حالة"],["new","سكن أول"]], state.finish) + '</select>'
+    + '<span class="sp"></span>'
+    + '<select name="sort" id="f-sort" aria-label="الترتيب">' + options(SORTS.map(function(s){ return [s[0], "الترتيب: " + s[1]]; }), state.sort) + '</select>'
     + '</form>'
-    + '<p class="count">' + list.length + ' متاحة</p>'
-    + '<div class="grid">' + (list.map(cardHtml).join("") || '<div class="empty">' + (state.favOnly ? "لسه ما حفظتش شقق. دوس على القلب اللي على أي شقة عشان ترجعلها بعدين." : "مفيش شقق بالمواصفات دي دلوقتي. جرّب تغيّر الاختيارات.") + '</div>') + '</div>';
+    + '<div class="grid">' + (list.map(cardHtml).join("") || '<div class="empty">مفيش شقق بالمواصفات دي دلوقتي. جرّب تغيّر الاختيارات.</div>') + '</div>';
   var form = document.getElementById("filters");
   form.addEventListener("submit", function(e){ e.preventDefault(); });
-  form.addEventListener("change", function(e){
-    state[e.target.name] = e.target.value;
-    var id = e.target.id;
-    renderList();
-    var el = document.getElementById(id); if (el) el.focus();
-  });
-  document.getElementById("f-fav").addEventListener("click", function(){
-    state.favOnly = !state.favOnly; renderList();
-    document.getElementById("f-fav").focus();
-  });
+  form.addEventListener("change", function(e){ state[e.target.name] = e.target.value; var id = e.target.id; renderList(); var el = document.getElementById(id); if (el) el.focus(); });
+}
+function renderSaved(){
+  view = "saved"; current = null;
+  var list = APTS.filter(function(a){ return favs[a.code]; });
+  document.getElementById("app").innerHTML =
+    '<p class="crumbs"><a href="#home">الرئيسية</a> ‹ المحفوظة</p>'
+    + '<div class="lhead"><h1>الشقق المحفوظة<small>' + list.length + '</small></h1></div>'
+    + '<div class="grid">' + (list.map(cardHtml).join("") || '<div class="empty">لسه ما حفظتش شقق. دوس على القلب اللي على أي شقة عشان ترجعلها من هنا.</div>') + '</div>';
 }
 
+// ---- صفحة الشقة
 function renderDetail(a){
-  current = a; view = "detail";
+  view = "detail"; current = a;
   var shots = a.imgs.map(function(src, i){ return {src:src, label:"صورة " + (i + 1)}; });
   if (a.video) shots.splice(1, 0, {video:a.video, src:a.imgs[0], label:"فيديو الشقة"});
   var at = 0;
-  var thumbs = shots.map(function(s, i){
-    return '<button type="button" data-i="' + i + '" aria-label="' + s.label + '"><img src="' + s.src + '" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">' + (s.video ? '<b>▶</b>' : '') + '</button>';
-  }).join("");
-  function row(k, v){ return '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>'; }
+  function tr(k, v){ return '<tr><th scope="row">' + k + '</th><td>' + v + '</td></tr>'; }
+  var fin = [a.grade, a.finish === "new" ? "سكن أول" : a.finish === "used" ? "سكن تاني" : null].filter(Boolean).join("، ");
+  var rows = tr("كود الشقة", '<span dir="ltr">' + a.code + '</span>') + tr("النوع", a.kind) + tr("العرض", DEAL[a.deal].name)
+    + (fin ? tr("التشطيب", fin) : "") + (a.zone ? tr("المنطقة", a.zone) : "") + (a.gate ? tr("البوابة", a.gate) : "")
+    + (a.floor !== null ? tr("الدور", FLOORS[a.floor] || a.floor) : "")
+    + (a.deal === "sale" && a.area ? tr("سعر المتر", money(Math.round(a.price / a.area)) + " جنيه") : "") + tr("اتضافت", ago(daysOf(a)));
+  var meters = a.meters.length
+    ? a.meters.map(function(m){ return tr(m[0], '<span class="pill' + (m[2] === "warn" ? " warn" : "") + '">' + m[1] + '</span>'); }).join("")
+    : tr("العدادات", '<span class="pill plain">اسأل عنها</span>');
   var similar = APTS.filter(function(x){ return x.deal === a.deal && x !== a; }).sort(function(x, y){
     var sx = (x.zone === a.zone ? 0 : 1), sy = (y.zone === a.zone ? 0 : 1);
     return sx - sy || Math.abs(x.price - a.price) - Math.abs(y.price - a.price);
   }).slice(0, 3);
-  var fin = [a.grade, a.finish === "new" ? "سكن أول" : null].filter(Boolean).join(" · ");
-  var rows = row("النوع", a.kind) + (fin ? row("التشطيب", fin) : "") + (a.zone ? row("المنطقة", a.zone) : "") + (a.gate ? row("البوابة", a.gate) : "")
-    + (a.floor !== null ? row("الدور", floorsHtml(a.floor)) : "") + (a.deal === "sale" ? row("سعر المتر", money(Math.round(a.price / a.area)) + " جنيه") : "");
-  var meters = a.meters.length
-    ? a.meters.map(function(m){ return row(m[0], '<span class="pill' + (m[2] === "warn" ? " warn" : "") + '">' + m[1] + '</span>'); }).join("")
-    : row("العدادات", '<span class="pill plain">اسأل عنها على واتساب</span>');
+  var contact = PHONE
+    ? '<div class="btns"><a class="wabtn" href="' + waLink(a, INTENTS[0][1]) + '">' + ic("wa") + 'احجز معاينة على واتساب</a>'
+      + '<a class="btn2" href="tel:' + PHONE + '">' + ic("phone") + '<span dir="ltr">' + PHONE + '</span></a></div>'
+      + '<div class="qlinks"><a href="' + waLink(a, INTENTS[1][1]) + '">اسأل عن تفاصيل أكتر</a><a href="' + waLink(a, INTENTS[2][1]) + '">اسأل عن التفاوض في السعر</a></div>'
+    : '<p class="note" style="margin-top:12px">رقم التواصل هيتضاف قريب. احفظ كود الشقة: ' + a.code + '</p>';
   document.getElementById("app").innerHTML =
-    '<section class="detail"><a class="back" href="#' + a.deal + '">→ رجوع لشقق ال' + DEAL[a.deal].name + '</a>'
+    '<p class="crumbs"><a href="#home">الرئيسية</a> ‹ <a href="#' + a.deal + '">' + DEAL[a.deal].name + '</a> ‹ <span dir="ltr">' + a.code + '</span></p>'
+    + '<div class="dhead"><div><h1>' + title(a) + '</h1><p class="loc">' + ic("pin") + place(a) + '</p></div><div class="acts">' + favBtn(a, true) + '</div></div>'
     + '<div class="dgrid"><div>'
     + '<div class="gal"><div id="stage"></div>'
-    + '<button type="button" class="nav prev" id="g-prev" aria-label="اللي قبلها">‹</button>'
-    + '<button type="button" class="nav next" id="g-next" aria-label="اللي بعدها">›</button>'
+    + '<button type="button" class="gnav prev" id="g-prev" aria-label="اللي قبلها">›</button>'
+    + '<button type="button" class="gnav next" id="g-next" aria-label="اللي بعدها">‹</button>'
     + '<span class="pos" id="g-pos" dir="ltr"></span></div>'
-    + '<div class="thumbs" id="thumbs">' + thumbs + '</div>'
+    + '<div class="thumbs" id="thumbs">' + shots.map(function(s, i){ return '<button type="button" data-i="' + i + '" aria-label="' + s.label + '"><img src="' + s.src + '" alt="" loading="lazy">' + (s.video ? '<b>' + ic("play") + '</b>' : '') + '</button>'; }).join("") + '</div>'
     + (a.framed ? '<p class="note">الصور دي لقطات من فيديو الشقة.</p>' : '')
-    + '<div class="panel" style="margin-top:18px"><h2>وصف الشقة</h2><p class="desc" style="padding-bottom:14px">' + a.desc + '</p></div>'
-    + '<div class="panel" style="margin-top:14px"><h2>المميزات</h2><ul class="chips">' + a.feats.map(function(f){ return '<li>' + f + '</li>'; }).join("") + '</ul></div>'
+    + '<div class="box"><div class="strip"><div>' + ic("area") + '<b>' + a.area + ' م²</b>المساحة</div><div>' + ic("bed") + '<b>' + a.rooms + '</b>غرف</div><div>' + ic("bath") + '<b>' + a.baths + '</b>حمام</div><div>' + ic("floor") + '<b>' + (a.floor === null ? "—" : a.floor === 0 ? "أرضي" : a.floor) + '</b>الدور</div></div></div>'
+    + (a.desc ? '<div class="box"><h2>الوصف</h2><p>' + a.desc + '</p></div>' : '')
+    + '<div class="box"><h2>التفاصيل</h2><table class="tbl"><tbody>' + rows + '</tbody></table></div>'
+    + '<div class="box"><h2>العدادات والنت</h2><table class="tbl"><tbody>' + meters + '</tbody></table></div>'
+    + (a.feats.length ? '<div class="box"><h2>المميزات</h2><ul class="feats">' + a.feats.map(function(f){ return '<li>' + ic("check") + f + '</li>'; }).join("") + '</ul></div>' : '')
     + '</div>'
-    + '<div class="info">'
-    + '<div class="row" style="display:flex;gap:10px;align-items:center;justify-content:space-between">'
-    + '<span style="display:flex;gap:10px;align-items:center"><span class="keytag big">' + a.code + '</span><span class="pill plain">' + DEAL[a.deal].name + '</span></span>' + favBtn(a, true) + '</div>'
-    + '<h1>' + a.kind + ' ' + a.area + ' متر، ' + a.rooms + ' غرف، في ' + where(a) + '</h1>'
-    + '<div><div class="price">' + priceHtml(a) + '</div>' + (a.pnote ? '<p class="note">' + a.pnote + '</p>' : '') + '<p class="note">' + ago(daysOf(a)) + '</p></div>'
-    + '<div class="keyfacts"><div><b>' + a.area + '</b><span>متر</span></div><div><b>' + a.rooms + '</b><span>غرف</span></div><div><b>' + a.baths + '</b><span>حمام</span></div><div><b>' + (a.floor === null ? "—" : a.floor === 0 ? "أرضي" : a.floor) + '</b><span>الدور</span></div></div>'
-    + '<div class="panel"><h2>تفاصيل الشقة</h2><dl>' + rows + '</dl></div>'
-    + '<div class="panel"><h2>العدادات والنت</h2><dl>' + meters + '</dl></div>'
-    + contactHtml(a)
-    + '</div></div>'
-    + (similar.length ? '<div class="similar"><h2>شقق مشابهة</h2><div class="grid">' + similar.map(cardHtml).join("") + '</div></div>' : '')
-    + '</section>'
-    + (PHONE ? '<div class="stick"><div><div class="price">' + priceHtml(a) + '</div></div><a href="' + waLink(a) + '">واتساب · ' + a.code + '</a></div>' : '');
+    + '<aside class="side"><div class="box"><div class="price">' + priceHtml(a) + '</div>' + (a.pnote ? '<p class="note">' + a.pnote + '</p>' : '')
+    + contact
+    + '<div class="agent"><i>' + ic("phone") + '</i><span><b>' + (SITE.name || "") + '</b>اذكر الكود <span dir="ltr">' + a.code + '</span> لما تكلمنا</span></div>'
+    + '</div></aside></div>'
+    + (similar.length ? '<section class="sec"><div class="sec-h"><h2>شقق مشابهة</h2></div><div class="grid">' + similar.map(cardHtml).join("") + '</div></section>' : '')
+    + (PHONE ? '<div class="stick"><div class="price">' + priceHtml(a) + '</div><a class="btn2" href="tel:' + PHONE + '" aria-label="اتصال">' + ic("phone") + '</a><a class="wabtn" href="' + waLink(a, INTENTS[0][1]) + '">' + ic("wa") + 'واتساب</a></div>' : '');
   function show(i){
     at = (i + shots.length) % shots.length;
     var s = shots[at];
-    document.getElementById("stage").innerHTML = '<div class="ph stage">' + (s.video
+    document.getElementById("stage").innerHTML = '<div class="stage">' + (s.video
       ? '<video src="' + s.video + '" poster="' + s.src + '" controls playsinline preload="none"></video>'
       : '<img src="' + s.src + '" alt="' + title(a) + '، ' + s.label + '">') + '</div>';
     document.getElementById("g-pos").textContent = (at + 1) + " / " + shots.length;
-    Array.prototype.forEach.call(document.getElementById("thumbs").children, function(c, k){
-      if (k === at) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current");
-    });
+    Array.prototype.forEach.call(document.getElementById("thumbs").children, function(c, k){ if (k === at) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current"); });
   }
-  document.getElementById("thumbs").addEventListener("click", function(e){
-    var b = e.target.closest("button"); if (b) show(+b.dataset.i);
-  });
+  document.getElementById("thumbs").addEventListener("click", function(e){ var b = e.target.closest("button"); if (b) show(+b.dataset.i); });
   document.getElementById("g-prev").addEventListener("click", function(){ show(at - 1); });
   document.getElementById("g-next").addEventListener("click", function(){ show(at + 1); });
-  show(0);
+  if (shots.length) show(0);
 }
 
-// القلب: حفظ الشقة
 document.getElementById("app").addEventListener("click", function(e){
   var b = e.target.closest("[data-fav]"); if (!b) return;
-  e.preventDefault();
-  var code = b.dataset.fav;
-  toggleFav(code);
-  if (view !== "list") {
-    var on = !!favs[code];
-    Array.prototype.forEach.call(document.querySelectorAll('[data-fav="' + code + '"]'), function(x){
-      x.setAttribute("aria-pressed", on); x.textContent = on ? "♥" : "♡";
-      x.setAttribute("aria-label", on ? "شيل من المحفوظة" : "احفظ الشقة");
-    });
-  } else renderList();
+  e.preventDefault(); toggleFav(b.dataset.fav);
+  if (view === "saved") { renderSaved(); return; }
+  var on = !!favs[b.dataset.fav];
+  Array.prototype.forEach.call(document.querySelectorAll('[data-fav="' + b.dataset.fav + '"]'), function(x){
+    x.setAttribute("aria-pressed", on); x.setAttribute("aria-label", on ? "شيل من المحفوظة" : "احفظ الشقة");
+  });
 });
 
 function route(){
   var h = location.hash.replace("#", "");
   var a = APTS.filter(function(x){ return slug(x) === h; })[0];
+  document.body.classList.toggle("on-detail", !!a);
   if (a) { renderDetail(a); window.scrollTo(0, 0); }
   else if (h === "rent" || h === "sale") {
-    if (state.deal !== h) state = {deal:h, zone:"", rooms:"", finish:"", cap:"", sort:"new", favOnly:false};
-    renderList(); window.scrollTo(0, 0);
-  } else {
-    renderHome();
-    if (h === "contact") { var c = document.getElementById("contact"); if (c) c.scrollIntoView(); }
-    else window.scrollTo(0, 0);
+    if (!(keep && state.deal === h)) state = fresh(h);
+    keep = false; renderList(); window.scrollTo(0, 0);
   }
-  var nav = a ? a.deal : h;
+  else if (h === "saved") { renderSaved(); window.scrollTo(0, 0); }
+  else {
+    renderHome();
+    if (h === "contact") { var c = document.getElementById("contact"); if (c) c.scrollIntoView(); } else window.scrollTo(0, 0);
+  }
+  var nav = a ? a.deal : (h === "rent" || h === "sale" || h === "saved") ? h : "home";
   Array.prototype.forEach.call(document.querySelectorAll("[data-nav]"), function(l){
     if (l.dataset.nav === nav) l.setAttribute("aria-current", "page"); else l.removeAttribute("aria-current");
   });
@@ -552,19 +521,19 @@ function boot(data){
   APTS = (data.listings || []).filter(function(a){ return !a.hidden; });
   APTS.forEach(function(a){ a.imgs = a.imgs || []; a.feats = a.feats || []; a.meters = a.meters || []; if (a.floor === undefined) a.floor = null; });
   document.title = (SITE.name || "") + " | شقق إيجار وتمليك في حدايق الأهرام";
-  Array.prototype.forEach.call(document.querySelectorAll(".logo"), function(l){ l.innerHTML = SITE.name || ""; });
+  Array.prototype.forEach.call(document.querySelectorAll(".bname"), function(l){ l.innerHTML = SITE.name || ""; });
   document.getElementById("footText").innerHTML = SITE.footerText || "";
   document.getElementById("legal").innerHTML = "© " + new Date().getFullYear() + " " + (SITE.name || "");
   var n = document.getElementById("notice"); if (SITE.notice) { n.innerHTML = SITE.notice; n.hidden = false; }
-  document.getElementById("phoneText").textContent = PHONE;
-  document.getElementById("phoneFoot").textContent = PHONE;
-  document.getElementById("waTop").href = waLink(null); document.getElementById("waTop").hidden = !PHONE;
-  document.getElementById("waFoot").href = PHONE ? waLink(null) : "#contact";
+  ["callTop","callFoot"].forEach(function(id){ var e = document.getElementById(id); e.hidden = !PHONE; if (PHONE) { e.href = "tel:" + PHONE; e.innerHTML = (id === "callTop" ? ic("phone") : "") + PHONE; } });
+  ["waTop","waFoot","waTab"].forEach(function(id){ var e = document.getElementById(id); if (PHONE) e.href = waLink(null); else if (id !== "waFoot") e.hidden = true; });
+  var nr = APTS.filter(function(a){ return a.deal === "rent"; }).length;
+  state = fresh(nr * 2 >= APTS.length ? "rent" : "sale");
   window.addEventListener("hashchange", route);
   route();
 }
 fetch("data.json?v=" + Date.now()).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).then(boot).catch(function(){
-  document.getElementById("app").innerHTML = '<div class="empty" style="margin:60px 0">الصفحة مش قادرة تحمّل بيانات الشقق دلوقتي. جرّب تعمل تحديث للصفحة.</div>';
+  document.getElementById("app").innerHTML = '<div class="empty" style="margin:40px 0">الصفحة مش قادرة تحمّل بيانات الشقق دلوقتي. جرّب تعمل تحديث للصفحة.</div>';
 });
 </script>
 </body>

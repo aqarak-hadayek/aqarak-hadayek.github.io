@@ -163,9 +163,7 @@ ol{padding-inline-start:20px;margin:8px 0}
     <div class="card grid">
       <label for="s-name">اسم الموقع<input id="s-name"></label>
       <label for="s-phone">رقم الواتساب والتليفون<input id="s-phone" dir="ltr" placeholder="01xxxxxxxxx"></label>
-      <label for="s-eyebrow" class="wide">السطر الصغير فوق العنوان<input id="s-eyebrow"></label>
-      <label for="s-heroTitle" class="wide">العنوان الرئيسي<input id="s-heroTitle"></label>
-      <label for="s-heroLead" class="wide">الوصف تحت العنوان<textarea id="s-heroLead"></textarea></label>
+      <label for="s-heroTitle" class="wide">عنوان مربع البحث<input id="s-heroTitle"></label>
       <label for="s-contactTitle" class="wide">عنوان قسم التواصل<input id="s-contactTitle"></label>
       <label for="s-contactLead" class="wide">وصف قسم التواصل<input id="s-contactLead"></label>
       <label for="s-footerText" class="wide">نص الفوتر<input id="s-footerText"></label>
@@ -414,7 +412,7 @@ $("b-del").addEventListener("click", function(){
 });
 
 // ---- إعدادات الموقع
-var SKEYS = ["name","phone","eyebrow","heroTitle","heroLead","contactTitle","contactLead","footerText","notice","waListing","waGeneral"];
+var SKEYS = ["name","phone","heroTitle","contactTitle","contactLead","footerText","notice","waListing","waGeneral"];
 function fillSite(){ SKEYS.forEach(function(k){ $("s-" + k).value = data.site[k] || ""; }); say($("smsg"), ""); }
 $("f-site").addEventListener("submit", function(e){
   e.preventDefault(); SKEYS.forEach(function(k){ data.site[k] = $("s-" + k).value.replace(/\s+$/, ""); });

@@ -217,6 +217,24 @@ footer{background:var(--surface);border-top:1px solid var(--line);margin-top:36p
 .chip[aria-pressed="true"] b{color:inherit;opacity:.8}
 .clear{background:none;border:0;color:var(--brand);font-weight:600;padding:8px 0 10px;cursor:pointer}
 @media (max-width:760px){.frow{flex-direction:column;gap:6px}.flabel{flex:none}.frow .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:100%;padding-bottom:2px}.frow .chip{flex:none}}
+/* swipeable photos */
+.track{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.media{z-index:1}
+.media .track{position:absolute;inset:0}
+.media .track a{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;display:block}
+.media .tag,.media .mcount{pointer-events:none;z-index:1}
+.cpos{font-weight:500;font-variant-numeric:tabular-nums}
+.cnav{position:absolute;top:50%;transform:translateY(-50%);z-index:1;width:30px;height:30px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:#111;cursor:pointer;font-size:1rem;line-height:1;opacity:0;transition:opacity .15s}
+.cprev{left:8px}.cnext{right:8px}
+.card:hover .cnav,.cnav:focus-visible{opacity:1}
+@media (hover:none){.cnav{display:none}}
+.gal .stage{position:relative;aspect-ratio:4/3;max-height:560px;width:100%}
+.gal .slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative}
+.gal .slide img,.gal .slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.gal .gnav{z-index:1}.gal .prev{left:10px;inset-inline-start:auto}.gal .next{right:10px;inset-inline-end:auto}
+@media (max-width:760px){.gal .stage{aspect-ratio:3/4;max-height:70vh}}
+@media (prefers-reduced-motion:reduce){.cnav{transition:none}}
 </style>
 </head>
 <body>
@@ -330,9 +348,10 @@ function favBtn(a, inline){
 }
 function cardHtml(a){
   return '<article class="card">'
-    + '<div class="media">' + (a.imgs[0] ? '<img src="' + a.imgs[0] + '" alt="" loading="lazy">' : '')
+    + '<div class="media"><div class="track" dir="ltr">' + a.imgs.map(function(src, i){ return '<a href="#' + slug(a) + '" tabindex="-1" aria-hidden="true"><img src="' + src + '" alt="" loading="lazy"' + (i ? ' decoding="async"' : '') + '></a>'; }).join("") + '</div>'
+    + (a.imgs.length > 1 ? '<button type="button" class="cnav cprev" data-cnav="-1" aria-label="الصورة اللي قبلها">‹</button><button type="button" class="cnav cnext" data-cnav="1" aria-label="الصورة اللي بعدها">›</button>' : '')
     + '<span class="tag">' + DEAL[a.deal].tag + '</span>'
-    + '<span class="mcount"><span>' + ic("cam") + a.imgs.length + '</span>' + (a.video ? '<span>' + ic("play") + 'فيديو</span>' : '') + '</span></div>'
+    + '<span class="mcount"><span>' + ic("cam") + '<b class="cpos" dir="ltr">1 / ' + a.imgs.length + '</b></span>' + (a.video ? '<span>' + ic("play") + 'فيديو</span>' : '') + '</span></div>'
     + favBtn(a)
     + '<div class="cbody">'
     + '<div class="price">' + priceHtml(a) + '</div>'
@@ -483,9 +502,11 @@ function renderDetail(a){
     '<p class="crumbs"><a href="#home">الرئيسية</a> ‹ <a href="#' + a.deal + '">' + DEAL[a.deal].name + '</a> ‹ <span dir="ltr">' + a.code + '</span></p>'
     + '<div class="dhead"><div><h1>' + title(a) + '</h1><p class="loc">' + ic("pin") + place(a) + '</p></div><div class="acts">' + favBtn(a, true) + '</div></div>'
     + '<div class="dgrid"><div>'
-    + '<div class="gal"><div id="stage"></div>'
-    + '<button type="button" class="gnav prev" id="g-prev" aria-label="اللي قبلها">›</button>'
-    + '<button type="button" class="gnav next" id="g-next" aria-label="اللي بعدها">‹</button>'
+    + '<div class="gal"><div class="track stage" id="stage" dir="ltr">' + shots.map(function(s){ return '<div class="slide">' + (s.video
+      ? '<video src="' + s.video + '" poster="' + s.src + '" controls playsinline preload="none"></video>'
+      : '<img src="' + s.src + '" alt="' + title(a) + '، ' + s.label + '" loading="lazy">') + '</div>'; }).join("") + '</div>'
+    + '<button type="button" class="gnav prev" id="g-prev" aria-label="اللي قبلها">‹</button>'
+    + '<button type="button" class="gnav next" id="g-next" aria-label="اللي بعدها">›</button>'
     + '<span class="pos" id="g-pos" dir="ltr"></span></div>'
     + '<div class="thumbs" id="thumbs">' + shots.map(function(s, i){ return '<button type="button" data-i="' + i + '" aria-label="' + s.label + '"><img src="' + s.src + '" alt="" loading="lazy">' + (s.video ? '<b>' + ic("play") + '</b>' : '') + '</button>'; }).join("") + '</div>'
     + (a.framed ? '<p class="note">الصور دي لقطات من فيديو الشقة.</p>' : '')
@@ -501,19 +522,22 @@ function renderDetail(a){
     + '</div></aside></div>'
     + (similar.length ? '<section class="sec"><div class="sec-h"><h2>شقق مشابهة</h2></div><div class="grid">' + similar.map(cardHtml).join("") + '</div></section>' : '')
     + (PHONE ? '<div class="stick"><div class="price">' + priceHtml(a) + '</div><a class="btn2" href="tel:' + PHONE + '" aria-label="اتصال">' + ic("phone") + '</a><a class="wabtn" href="' + waLink(a, INTENTS[0][1]) + '">' + ic("wa") + 'واتساب</a></div>' : '');
-  function show(i){
-    at = (i + shots.length) % shots.length;
-    var s = shots[at];
-    document.getElementById("stage").innerHTML = '<div class="stage">' + (s.video
-      ? '<video src="' + s.video + '" poster="' + s.src + '" controls playsinline preload="none"></video>'
-      : '<img src="' + s.src + '" alt="' + title(a) + '، ' + s.label + '">') + '</div>';
+  var stage = document.getElementById("stage");
+  function mark(i){
+    at = i;
     document.getElementById("g-pos").textContent = (at + 1) + " / " + shots.length;
     Array.prototype.forEach.call(document.getElementById("thumbs").children, function(c, k){ if (k === at) c.setAttribute("aria-current", "true"); else c.removeAttribute("aria-current"); });
+    var th = document.getElementById("thumbs").children[at]; if (th && th.scrollIntoView) th.scrollIntoView({block:"nearest", inline:"nearest"});
+    Array.prototype.forEach.call(stage.querySelectorAll("video"), function(v){ if (v.closest(".slide") !== stage.children[at]) v.pause(); });
   }
+  function show(i){ i = (i + shots.length) % shots.length; stage.scrollTo({left:i * stage.clientWidth, behavior:"smooth"}); }
+  stage.addEventListener("scroll", function(){ var i = Math.round(stage.scrollLeft / stage.clientWidth); if (i !== at && i >= 0 && i < shots.length) mark(i); });
   document.getElementById("thumbs").addEventListener("click", function(e){ var b = e.target.closest("button"); if (b) show(+b.dataset.i); });
-  document.getElementById("g-prev").addEventListener("click", function(){ show(at - 1); });
-  document.getElementById("g-next").addEventListener("click", function(){ show(at + 1); });
-  if (shots.length) show(0);
+  var want = 0;
+  document.getElementById("g-prev").addEventListener("click", function(){ want = (want - 1 + shots.length) % shots.length; show(want); });
+  document.getElementById("g-next").addEventListener("click", function(){ want = (want + 1) % shots.length; show(want); });
+  stage.addEventListener("scrollend", function(){ want = at; });
+  if (shots.length) mark(0);
 }
 
 document.getElementById("app").addEventListener("click", function(e){
@@ -526,6 +550,14 @@ document.getElementById("app").addEventListener("click", function(e){
   });
 });
 
+document.getElementById("app").addEventListener("scroll", function(e){
+  var t = e.target; if (!t.classList || !t.classList.contains("track") || t.id === "stage") return;
+  var p = t.parentNode.querySelector(".cpos"); if (p) p.textContent = (Math.round(t.scrollLeft / t.clientWidth) + 1) + " / " + t.children.length;
+}, true);
+document.getElementById("app").addEventListener("click", function(e){
+  var b = e.target.closest("[data-cnav]"); if (!b) return;
+  e.preventDefault(); var t = b.parentNode.querySelector(".track"); t.scrollBy({left:(+b.dataset.cnav) * t.clientWidth, behavior:"smooth"});
+});
 function route(){
   var h = location.hash.replace("#", "");
   var a = APTS.filter(function(x){ return slug(x) === h; })[0];

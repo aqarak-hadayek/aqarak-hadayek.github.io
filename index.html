@@ -341,6 +341,29 @@ body.full .stick,body.full .top{display:none}
   .tabbar a[data-nav="rent"],.tabbar a[data-nav="sale"]{margin:5px 6px;border-radius:12px;padding:4px 0 3px;font-weight:800}
 }
 @media (prefers-reduced-motion:reduce){.seg button{transition:none}}
+/* help me help you + side support button */
+.helpcta{display:flex;align-items:center;gap:14px;background:var(--brand);color:var(--brand-ink);border-radius:16px;padding:16px 18px;margin:22px 0 0}
+.helpcta .hi{width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;flex:none}
+.helpcta .hi .ic{width:24px;height:24px}
+.helpcta span:nth-child(2){flex:1;font-size:.9rem;opacity:.9}
+.helpcta b{display:block;font-size:1.1rem;opacity:1}
+.helpcta em{font-style:normal;font-weight:700;background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 18px}
+.helpbox{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);padding:22px}
+.helpbox h1{font-size:1.5rem;font-weight:800;margin:0 0 4px}
+.helpbox>p{margin:0 0 14px;color:var(--muted)}
+.helpbox textarea{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink);width:100%;font:inherit;resize:vertical}
+.hbtns{display:flex;gap:10px;margin-top:12px}
+.hbtns .go{flex:1;border:0;font-size:1rem}
+.micbtn{display:flex;align-items:center;gap:8px;border:2px solid var(--accent);color:var(--accent);background:transparent;border-radius:10px;padding:10px 18px;font-weight:700;cursor:pointer}
+.micbtn[aria-pressed="true"]{background:var(--heart);border-color:var(--heart);color:#fff}
+.helpbox .note a{color:var(--wa);font-weight:600;text-decoration:underline}
+.got{margin:18px 0 6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;color:var(--muted)}
+#h-out .box .wabtn{padding:11px 18px}
+.support{position:fixed;left:0;top:50%;z-index:25;display:flex;align-items:center;gap:8px;background:var(--wa);color:var(--wa-ink);font-weight:800;padding:10px 14px;border-radius:0 12px 12px 0;box-shadow:0 6px 20px rgba(0,0,0,.22);writing-mode:vertical-rl;transform:translateY(-50%)}
+.support .ic{width:22px;height:22px;transform:rotate(90deg)}
+.support:hover{padding-inline-start:18px}
+body.full .support,body.sheet .support{display:none}
+@media (max-width:760px){.support{font-size:.82rem;padding:9px 8px;top:auto;bottom:84px;transform:none}.helpcta em{display:none}}
 </style>
 </head>
 <body>
@@ -348,7 +371,7 @@ body.full .stick,body.full .top{display:none}
   <div class="wrap">
     <a class="brand" href="#home"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 3l9 8"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg><span class="bname"></span></a>
     <nav class="nav" aria-label="القائمة">
-      <a href="#home" data-nav="home">الرئيسية</a><a href="#rent" data-nav="rent">إيجار</a><a href="#sale" data-nav="sale">تمليك</a><a href="#saved" data-nav="saved">المحفوظة</a>
+      <a href="#home" data-nav="home">الرئيسية</a><a href="#rent" data-nav="rent">إيجار</a><a href="#sale" data-nav="sale">تمليك</a><a href="#saved" data-nav="saved">المحفوظة</a><a href="#help" data-nav="help">ساعدني أساعدك</a>
     </nav>
     <span class="sp"></span>
     <a class="callbtn" id="callTop" href="#contact"></a>
@@ -373,8 +396,10 @@ body.full .stick,body.full .top{display:none}
   <a href="#rent" data-nav="rent"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/></svg>إيجار</a>
   <a href="#sale" data-nav="sale"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1M14 8h1M9 12h1M14 12h1M10 21v-4h4v4"/></svg>تمليك</a>
   <a href="#saved" data-nav="saved"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg>المحفوظة</a>
-  <a href="#contact" class="wa" id="waTab"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.300-4A8 8 0 1 1 8 18.700z"/></svg>واتساب</a>
+  <a href="#help" data-nav="help"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg>ساعدني</a>
 </nav>
+
+<a class="support" id="support" href="#contact" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.300-4A8 8 0 1 1 8 18.700z"/></svg><span>خدمة العملاء</span></a>
 
 <script>
 // كل المحتوى بييجي من data.json، وبيتعدّل من لوحة التحكم admin.html
@@ -400,6 +425,7 @@ var P = {
   check:'<path d="m5 12 5 5 9-10"/>',
   phone:'<path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
   wa:'<path d="M4 20l1.300-4A8 8 0 1 1 8 18.700z"/>',
+  mic:'<path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/>',
   key:'<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/>',
   bld:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1M14 8h1M9 12h1M14 12h1M10 21v-4h4v4"/>'
 };
@@ -504,6 +530,7 @@ function renderHome(){
     + '<label class="f" for="h-cap">السعر<select id="h-cap" name="cap">' + options(DEAL[state.deal].caps, state.cap) + '</select></label>'
     + '<a class="go go-' + state.deal + '" id="h-go" href="#' + state.deal + '">عرض ' + APTS.filter(match).length + ' شقة</a>'
     + '</form></section>'
+    + '<a class="helpcta" href="#help"><span class="hi">' + ic("mic") + '</span><span><b>ساعدني أساعدك</b>قول أو اكتب إنت عايز إيه بالظبط، وهنطلّعلك المتاح عندنا</span><em>ابدأ</em></a>'
     + '<section class="sec"><div class="sec-h"><h2>مختارات</h2><a href="#sale">عرض الكل</a></div><div class="grid">' + latest.map(cardHtml).join("") + '</div></section>'
     + '<section class="sec"><div class="sec-h"><h2>تصفح حسب المنطقة</h2></div><div class="zones chips">'
     + Object.keys(zc).sort(function(x, y){ return zc[y] - zc[x]; }).map(function(z){ return '<button type="button" class="zone" data-zone="' + z + '">' + (zimg[z] ? '<img src="' + zimg[z] + '" alt="" loading="lazy">' : '') + '<span>' + z + '<small>' + zc[z] + ' عقار</small></span></button>'; }).join("") + '</div></section>'
@@ -588,6 +615,115 @@ function renderSaved(){
     '<p class="crumbs"><a href="#home">الرئيسية</a> ‹ المحفوظة</p>'
     + '<div class="lhead"><h1>الشقق المحفوظة<small>' + list.length + '</small></h1></div>'
     + '<div class="grid">' + (list.map(cardHtml).join("") || '<div class="empty">لسه ما حفظتش شقق. دوس على القلب اللي على أي شقة عشان ترجعلها من هنا.</div>') + '</div>';
+}
+
+// ---- ساعدني أساعدك: العميل يكتب أو يتكلم، وإحنا نطلّع المناسب
+function norm(t){
+  return String(t).replace(/[\u064B-\u0652\u0640]/g, "").replace(/[\u0660-\u0669]/g, function(d){ return d.charCodeAt(0) - 0x660; })
+    .replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").replace(/\s+/g, " ").trim();
+}
+var WORDN = {"واحد":1,"واحده":1,"اتنين":2,"اثنين":2,"تلات":3,"تلاته":3,"ثلاث":3,"ثلاثه":3,"اربع":4,"اربعه":4,"خمس":5,"خمسه":5};
+var ORD = {"الاول":1,"الاولي":1,"اول":1,"التاني":2,"التانيه":2,"الثاني":2,"الثانيه":2,"تاني":2,"التالت":3,"التالته":3,"الثالث":3,"الثالثه":3,"الرابع":4,"الرابعه":4,"رابع":4,"الخامس":5,"الخامسه":5};
+var GATES = {1:"البوابة الأولى",2:"البوابة التانية",3:"البوابة التالتة",4:"البوابة الرابعة"};
+function understand(text){
+  var t = norm(text), q = {}, m;
+  if (/ايجار|اجار|استاجر|ااجر|أجر/.test(t)) q.deal = "rent";
+  if (/تمليك|شراء|اشتري|اشترى|ابيع|للبيع|امتلك|كاش/.test(t)) q.deal = "sale";
+  if ((m = t.match(/(\d+)\s*(?:غرف|غرفه|اوض|اوضه)/))) q.rooms = +m[1];
+  else if (/غرفتين|اوضتين/.test(t)) q.rooms = 2;
+  else if ((m = t.match(/(تلات|تلاته|ثلاث|ثلاثه|اربع|اربعه|خمس|خمسه)\s*(?:غرف|اوض)/))) q.rooms = WORDN[m[1]];
+  if ((m = t.match(/منطق[هة]\s*\(?\s*([\u0621-\u064A])(?![\u0621-\u064A])/))) q.zone = m[1];
+  if ((m = t.match(/بوابه?\s*(?:رقم\s*)?(\d|الاولي|الاول|اولي|التانيه|الثانيه|تانيه|التالته|الثالثه|الرابعه|رابعه)/))) q.gate = GATES[+m[1] || ORD[m[1]] || ORD["ال" + m[1]]];
+  var caps = [], re = /(\d+(?:[.,]\d+)?)\s*(مليون|الف)(\s*و\s*(نص|ربع|(\d+)\s*الف)?)?/g;
+  while ((m = re.exec(t))) {
+    var v = parseFloat(m[1].replace(",", ".")) * (m[2] === "مليون" ? 1e6 : 1e3);
+    if (m[2] === "مليون" && m[4]) v += m[4] === "نص" ? 5e5 : m[4] === "ربع" ? 2.5e5 : (+m[5] || 0) * 1e3;
+    caps.push(v);
+  }
+  if (!caps.length && /مليون ونص/.test(t)) caps.push(1.5e6);
+  if (!caps.length && /نص مليون/.test(t)) caps.push(5e5);
+  if (!caps.length && /مليون/.test(t)) caps.push(1e6);
+  (t.match(/\d{4,}/g) || []).forEach(function(n){ caps.push(+n); });
+  if (caps.length) { q.cap = Math.max.apply(null, caps); if (!q.deal) q.deal = q.cap >= 3e5 ? "sale" : "rent"; }
+  if ((m = t.match(/(\d{2,3})\s*(?:متر|م\b)/))) q.area = +m[1];
+  if (/ارضي/.test(t)) q.floor = 0;
+  else if ((m = t.match(/(?:دور|الدور)\s*(\d|الاول|التاني|الثاني|التالت|الثالث|الرابع|الخامس)/))) q.floor = +m[1] || ORD[m[1]];
+  if (/اول سكن|سكن اول|جديده|جديد/.test(t)) q.fresh = true;
+  if (/اسانسير|مصعد/.test(t)) q.lift = true;
+  if (/محل/.test(t)) q.kind = "محل";
+  return q;
+}
+function zletter(a){ return a.zone ? norm(plain(a.zone)).replace(/^منطقه\s*/, "").charAt(0) : ""; }
+function findFor(q){
+  function ok(a, strict){
+    if (q.deal && a.deal !== q.deal) return false;
+    if (q.cap && a.price > q.cap * 1.05) return false;
+    if (q.kind ? a.kind !== q.kind : a.kind === "محل") return false;
+    if (strict) {
+      if (q.rooms && a.rooms && a.rooms !== q.rooms) return false;
+      if (q.zone && zletter(a) !== q.zone) return false;
+      if (q.gate && a.gate !== q.gate) return false;
+      if (q.floor !== undefined && a.floor !== q.floor) return false;
+      if (q.fresh && a.finish !== "new") return false;
+      if (q.lift && a.feats.join(" ").indexOf("أسانسير") < 0) return false;
+      if (q.area && a.area && Math.abs(a.area - q.area) > q.area * 0.2) return false;
+    }
+    return true;
+  }
+  function score(a){
+    var sc = 0;
+    if (q.rooms && a.rooms === q.rooms) sc += 3;
+    if (q.zone && zletter(a) === q.zone) sc += 4;
+    if (q.gate && a.gate === q.gate) sc += 2;
+    if (q.area && a.area) sc -= Math.abs(a.area - q.area) / 25;
+    if (q.cap) sc -= Math.abs(q.cap - a.price) / q.cap;
+    if (q.fresh && a.finish === "new") sc += 2;
+    if (q.lift && a.feats.join(" ").indexOf("أسانسير") >= 0) sc += 1;
+    return sc - (a.framed ? .3 : 0);
+  }
+  var exact = APTS.filter(function(a){ return ok(a, true); }).sort(function(x, y){ return score(y) - score(x); });
+  if (exact.length) return {exact:true, list:exact.slice(0, 6)};
+  return {exact:false, list:APTS.filter(function(a){ return ok(a, false); }).sort(function(x, y){ return score(y) - score(x); }).slice(0, 3)};
+}
+function renderHelp(){
+  view = "help"; current = null;
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  document.getElementById("app").innerHTML =
+    '<p class="crumbs"><a href="#home">الرئيسية</a> ‹ ساعدني أساعدك</p>'
+    + '<div class="helpbox"><h1>ساعدني أساعدك</h1><p>قولّنا إنت عايز إيه بالظبط، كتابة أو بصوتك، وهنطلّعلك المتاح عندنا على طول.</p>'
+    + '<form id="hf"><label class="f" for="h-text">طلبك<textarea id="h-text" rows="4" placeholder="مثلاً: عايز شقة تمليك 3 غرف في منطقة ط، ميزانيتي لحد 3 مليون، ويفضّل أول سكن بأسانسير"></textarea></label>'
+    + '<div class="hbtns">' + (SR ? '<button type="button" class="micbtn" id="h-mic" aria-pressed="false">' + ic("mic") + '<span>اتكلم</span></button>' : '')
+    + '<button type="submit" class="go go-sale">دوّر لي</button></div>'
+    + '<p class="note" id="h-note">' + (SR ? 'دوس «اتكلم» وقول طلبك، وهيتكتب لوحده.' : 'التسجيل الصوتي مش مدعوم على المتصفح ده.') + (PHONE ? ' أو <a href="' + waText("عايز أبعت طلبي تسجيل صوتي") + '">ابعت تسجيل صوتي على واتساب</a>.' : '') + '</p></form></div>'
+    + '<div id="h-out"></div>';
+  var box = document.getElementById("h-text"), note = document.getElementById("h-note"), out = document.getElementById("h-out");
+  function run(){
+    var text = box.value.trim(); if (!text) { box.focus(); return; }
+    var q = understand(text), r = findFor(q), tags = [];
+    if (q.kind) tags.push(q.kind); if (q.deal) tags.push(DEAL[q.deal].name); if (q.rooms) tags.push(q.rooms + " غرف"); if (q.zone) tags.push("منطقة " + q.zone);
+    if (q.gate) tags.push(q.gate); if (q.cap) tags.push("لحد " + money(q.cap)); if (q.area) tags.push("حوالي " + q.area + " متر");
+    if (q.floor !== undefined) tags.push(q.floor === 0 ? "أرضي" : "الدور " + q.floor); if (q.fresh) tags.push("أول سكن"); if (q.lift) tags.push("أسانسير");
+    var wa = PHONE ? '<a class="wabtn" href="' + waText("طلب من الموقع (ساعدني أساعدك):\n" + text) + '">' + ic("wa") + 'ابعت طلبك لخدمة العملاء على واتساب</a>' : '';
+    var head = tags.length ? '<p class="got">فهمنا إنك عايز: ' + tags.map(function(x){ return '<span class="pill plain">' + x + '</span>'; }).join(" ") + '</p>' : '';
+    if (!tags.length) out.innerHTML = '<div class="box"><h2>محتاجين نفهم طلبك أكتر</h2><p>الأفضل إنك تكلمنا على واتساب ونساعدك مباشرة.</p><p style="margin-top:12px">' + wa + '</p></div>';
+    else if (r.exact) out.innerHTML = head + '<div class="sec-h"><h2>' + r.list.length + ' عقار مناسب لطلبك</h2></div><div class="grid">' + r.list.map(cardHtml).join("") + '</div><div class="box"><p>مش لاقي اللي في بالك بالظبط؟ كلّمنا وإحنا ندوّرلك.</p><p style="margin-top:12px">' + wa + '</p></div>';
+    else out.innerHTML = head + '<div class="box"><h2>مفيش حاجة مطابقة لطلبك بالظبط دلوقتي</h2><p>الأفضل إنك تكلمنا على واتساب، ممكن يكون عندنا عقار لسه ما نزلش على الموقع.</p><p style="margin-top:12px">' + wa + '</p></div>'
+      + (r.list.length ? '<div class="sec-h" style="margin-top:22px"><h2>أقرب حاجة لطلبك</h2></div><div class="grid">' + r.list.map(cardHtml).join("") + '</div>' : '');
+    out.scrollIntoView({block:"start"});
+  }
+  document.getElementById("hf").addEventListener("submit", function(e){ e.preventDefault(); run(); });
+  var mic = document.getElementById("h-mic");
+  if (mic) {
+    var rec = null, base = "";
+    mic.addEventListener("click", function(){
+      if (rec) { rec.stop(); return; }
+      rec = new SR(); rec.lang = "ar-EG"; rec.interimResults = true; rec.continuous = true; base = box.value ? box.value + " " : "";
+      rec.onresult = function(e){ var t = ""; for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript; box.value = base + t; };
+      rec.onerror = function(e){ note.textContent = e.error === "not-allowed" ? "المتصفح مانع الميكروفون. اسمحله من إعدادات الموقع، أو اكتب طلبك." : "ما قدرناش نسمعك كويس. جرّب تاني أو اكتب طلبك."; };
+      rec.onend = function(){ rec = null; mic.setAttribute("aria-pressed", "false"); mic.lastChild.textContent = "اتكلم"; if (box.value.trim()) run(); };
+      try { rec.start(); mic.setAttribute("aria-pressed", "true"); mic.lastChild.textContent = "بسمعك... دوس للإيقاف"; note.textContent = "اتكلم دلوقتي، ولما تخلص دوس على الزرار."; } catch (err) { rec = null; }
+    });
+  }
 }
 
 // ---- صفحة الشقة
@@ -701,12 +837,13 @@ function route(){
     keep = false; renderList(); window.scrollTo(0, back);
   }
   else if (h === "saved") { renderSaved(); window.scrollTo(0, back); }
+  else if (h === "help") { renderHelp(); window.scrollTo(0, 0); }
   else {
     renderHome();
     if (h === "contact") { var c = document.getElementById("contact"); if (c) c.scrollIntoView(); } else window.scrollTo(0, back);
   }
   lastHash = h; lastView = view;
-  var nav = a ? a.deal : (h === "rent" || h === "sale" || h === "saved") ? h : "home";
+  var nav = a ? a.deal : (h === "rent" || h === "sale" || h === "saved" || h === "help") ? h : "home";
   Array.prototype.forEach.call(document.querySelectorAll("[data-nav]"), function(l){
     if (l.dataset.nav === nav) l.setAttribute("aria-current", "page"); else l.removeAttribute("aria-current");
   });
@@ -722,7 +859,7 @@ function boot(data){
   document.getElementById("legal").innerHTML = "© " + new Date().getFullYear() + " " + (SITE.name || "");
   var n = document.getElementById("notice"); if (SITE.notice) { n.innerHTML = SITE.notice; n.hidden = false; }
   ["callTop","callFoot"].forEach(function(id){ var e = document.getElementById(id); e.hidden = !PHONE; if (PHONE) { e.href = "tel:" + PHONE; e.innerHTML = (id === "callTop" ? ic("phone") : "") + PHONE; } });
-  ["waTop","waFoot","waTab"].forEach(function(id){ var e = document.getElementById(id); if (PHONE) e.href = waLink(null); else if (id !== "waFoot") e.hidden = true; });
+  ["waTop","waFoot","support"].forEach(function(id){ var e = document.getElementById(id); if (PHONE) { e.href = waLink(null); e.hidden = false; } else if (id !== "waFoot") e.hidden = true; });
   var nr = APTS.filter(function(a){ return a.deal === "rent"; }).length;
   state = fresh(nr * 2 >= APTS.length ? "rent" : "sale");
   window.addEventListener("hashchange", route);

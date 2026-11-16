@@ -205,6 +205,18 @@ footer{background:var(--surface);border-top:1px solid var(--line);margin-top:36p
 }
 @media (min-width:480px) and (max-width:760px){.grid{grid-template-columns:1fr 1fr}}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+.sortbox{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+.sortbox select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--ink);font-weight:600}
+.fpanel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 14px;margin-bottom:14px}
+.fpanel summary{cursor:pointer;font-weight:700;padding:8px 0;list-style-position:inside}
+.fpanel .cnt{background:var(--brand);color:var(--brand-ink);border-radius:999px;font-size:.75rem;padding:0 7px;margin-inline-start:4px}
+.frow{display:flex;gap:12px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line)}
+.flabel{flex:0 0 76px;font-size:.84rem;color:var(--muted)}
+.frow .chips{flex:1}
+.chip[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.chip[aria-pressed="true"] b{color:inherit;opacity:.8}
+.clear{background:none;border:0;color:var(--brand);font-weight:600;padding:8px 0 10px;cursor:pointer}
+@media (max-width:760px){.frow{flex-direction:column;gap:6px}.flabel{flex:none}.frow .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:100%;padding-bottom:2px}.frow .chip{flex:none}}
 </style>
 </head>
 <body>
@@ -341,10 +353,10 @@ function facets(list){
   return {zones:zones.sort(), rooms:rooms.sort()};
 }
 function match(a){
-  return a.deal === state.deal && (!state.zone || a.zone === state.zone) && (!state.rooms || String(a.rooms) === state.rooms)
-    && (!state.finish || a.finish === state.finish) && (!state.cap || a.price <= +state.cap);
+  return a.deal === state.deal && (!state.zones.length || state.zones.indexOf(a.zone) >= 0) && (!state.rooms.length || state.rooms.indexOf(String(a.rooms)) >= 0)
+    && (!state.gate || a.gate === state.gate) && (!state.finish || a.finish === state.finish) && (!state.cap || a.price <= +state.cap);
 }
-function fresh(deal){ return {deal:deal, zone:"", rooms:"", finish:"", cap:"", sort:"new"}; }
+function fresh(deal){ return {deal:deal, zones:[], rooms:[], gate:"", finish:"", cap:"", sort:"new"}; }
 var state = fresh("rent"), view = "home", current = null, keep = false;
 
 // ---- الرئيسية
@@ -357,8 +369,8 @@ function renderHome(){
     '<section class="search"><h1>' + (SITE.heroTitle || "دوّر على شقتك في حدايق الأهرام") + '</h1>'
     + '<div class="seg" role="group" aria-label="نوع العرض"><button type="button" data-deal="rent" aria-pressed="' + (state.deal === "rent") + '">إيجار</button><button type="button" data-deal="sale" aria-pressed="' + (state.deal === "sale") + '">تمليك</button></div>'
     + '<form class="fields" id="hs">'
-    + '<label class="f" for="h-zone">المنطقة<select id="h-zone" name="zone">' + options([["","كل المناطق"]].concat(F.zones.map(function(z){ return [z, z]; })), state.zone) + '</select></label>'
-    + '<label class="f" for="h-rooms">الغرف<select id="h-rooms" name="rooms">' + options([["","أي عدد"]].concat(F.rooms.map(function(r){ return [r, r + " غرف"]; })), state.rooms) + '</select></label>'
+    + '<label class="f" for="h-zone">المنطقة<select id="h-zone" name="zone">' + options([["","كل المناطق"]].concat(F.zones.map(function(z){ return [z, z]; })), state.zones[0] || "") + '</select></label>'
+    + '<label class="f" for="h-rooms">الغرف<select id="h-rooms" name="rooms">' + options([["","أي عدد"]].concat(F.rooms.map(function(r){ return [r, r + " غرف"]; })), state.rooms[0] || "") + '</select></label>'
     + '<label class="f" for="h-cap">السعر<select id="h-cap" name="cap">' + options(DEAL[state.deal].caps, state.cap) + '</select></label>'
     + '<a class="go" id="h-go" href="#' + state.deal + '">عرض ' + APTS.filter(match).length + ' شقة</a>'
     + '</form></section>'
@@ -378,12 +390,12 @@ function renderHome(){
     + '</div></section>';
   var app = document.getElementById("app");
   app.querySelector(".seg").addEventListener("click", function(e){ var d = e.target.dataset.deal; if (d && d !== state.deal) { state = fresh(d); renderHome(); } });
-  document.getElementById("hs").addEventListener("change", function(e){ state[e.target.name] = e.target.value; document.getElementById("h-go").textContent = "عرض " + APTS.filter(match).length + " شقة"; });
+  document.getElementById("hs").addEventListener("change", function(e){ var n = e.target.name, v = e.target.value; if (n === "zone") state.zones = v ? [v] : []; else if (n === "rooms") state.rooms = v ? [v] : []; else state[n] = v; document.getElementById("h-go").textContent = "عرض " + APTS.filter(match).length + " شقة"; });
   document.getElementById("h-go").addEventListener("click", function(){ keep = true; });
   app.querySelector(".chips").addEventListener("click", function(e){
     var b = e.target.closest("[data-zone]"); if (!b) return;
     var z = plain(b.dataset.zone), d = APTS.some(function(a){ return a.zone === b.dataset.zone && a.deal === "sale"; }) ? "sale" : "rent";
-    state = fresh(d); state.zone = b.dataset.zone; keep = true; location.hash = d;
+    state = fresh(d); state.zones = [b.dataset.zone]; keep = true; location.hash = d;
   });
   var rf = document.getElementById("req");
   if (rf) { var upd = function(){ document.getElementById("r-send").href = requestLink(); }; rf.addEventListener("input", upd); rf.addEventListener("submit", function(e){ e.preventDefault(); }); upd(); }
@@ -392,7 +404,7 @@ function renderHome(){
 // ---- القوايم
 function renderList(){
   view = "list"; current = null;
-  var D = DEAL[state.deal], F = facets(APTS.filter(function(a){ return a.deal === state.deal; }));
+  var D = DEAL[state.deal], ALL = APTS.filter(function(a){ return a.deal === state.deal; });
   var list = APTS.filter(match);
   list.sort(function(x, y){
     if (state.sort === "low") return x.price - y.price;
@@ -400,21 +412,39 @@ function renderList(){
     if (state.sort === "big") return y.area - x.area;
     return daysOf(x) - daysOf(y) || (x.framed ? 1 : 0) - (y.framed ? 1 : 0) || y.imgs.length - x.imgs.length;
   });
+  function count(key){ var c = {}; ALL.forEach(function(a){ var v = a[key]; if (v !== null && v !== undefined && v !== "") c[v] = (c[v] || 0) + 1; }); return c; }
+  var zc = count("zone"), rc = count("rooms"), gc = count("gate");
+  function chips(group, counts, picked, label){
+    return Object.keys(counts).sort().map(function(k){
+      var on = Array.isArray(picked) ? picked.indexOf(k) >= 0 : picked === k;
+      return '<button type="button" class="chip" data-g="' + group + '" data-v="' + k + '" aria-pressed="' + on + '">' + label(k) + '<b>' + counts[k] + '</b></button>';
+    }).join("");
+  }
+  var active = state.zones.length + state.rooms.length + (state.gate ? 1 : 0) + (state.cap ? 1 : 0) + (state.finish ? 1 : 0);
   document.getElementById("app").innerHTML =
     '<p class="crumbs"><a href="#home">الرئيسية</a> ‹ ' + D.name + '</p>'
-    + '<div class="lhead"><h1>' + D.title + '<small>' + list.length + ' نتيجة</small></h1></div>'
-    + '<form class="fbar" id="filters">'
-    + '<select name="zone" id="f-zone" aria-label="المنطقة">' + options([["","كل المناطق"]].concat(F.zones.map(function(z){ return [z, z]; })), state.zone) + '</select>'
-    + '<select name="rooms" id="f-rooms" aria-label="عدد الغرف">' + options([["","كل الغرف"]].concat(F.rooms.map(function(r){ return [r, r + " غرف"]; })), state.rooms) + '</select>'
-    + '<select name="cap" id="f-cap" aria-label="السعر">' + options(D.caps, state.cap) + '</select>'
-    + '<select name="finish" id="f-finish" aria-label="السكن">' + options([["","أي حالة"],["new","سكن أول"]], state.finish) + '</select>'
-    + '<span class="sp"></span>'
-    + '<select name="sort" id="f-sort" aria-label="الترتيب">' + options(SORTS.map(function(s){ return [s[0], "الترتيب: " + s[1]]; }), state.sort) + '</select>'
-    + '</form>'
-    + '<div class="grid">' + (list.map(cardHtml).join("") || '<div class="empty">مفيش شقق بالمواصفات دي دلوقتي. جرّب تغيّر الاختيارات.</div>') + '</div>';
-  var form = document.getElementById("filters");
-  form.addEventListener("submit", function(e){ e.preventDefault(); });
-  form.addEventListener("change", function(e){ state[e.target.name] = e.target.value; var id = e.target.id; renderList(); var el = document.getElementById(id); if (el) el.focus(); });
+    + '<div class="lhead"><h1>' + D.title + '<small>' + list.length + ' نتيجة</small></h1>'
+    + '<label class="sortbox" for="f-sort">الترتيب<select id="f-sort">' + options(SORTS, state.sort) + '</select></label></div>'
+    + '<details class="fpanel" id="fpanel"' + (window.innerWidth > 760 || active ? ' open' : '') + '><summary>الفلاتر' + (active ? ' <span class="cnt">' + active + '</span>' : '') + '</summary>'
+    + '<div class="frow"><span class="flabel">المنطقة</span><div class="chips">' + chips("zones", zc, state.zones, function(k){ return k; }) + '</div></div>'
+    + '<div class="frow"><span class="flabel">عدد الغرف</span><div class="chips">' + chips("rooms", rc, state.rooms, function(k){ return k + " غرف"; }) + '</div></div>'
+    + '<div class="frow"><span class="flabel">البوابة</span><div class="chips">' + chips("gate", gc, state.gate, function(k){ return k; }) + '</div></div>'
+    + '<div class="frow"><span class="flabel">السعر</span><div class="chips">' + D.caps.slice(1).map(function(c){ return '<button type="button" class="chip" data-g="cap" data-v="' + c[0] + '" aria-pressed="' + (String(state.cap) === String(c[0])) + '">' + c[1] + '</button>'; }).join("")
+    + '<button type="button" class="chip" data-g="finish" data-v="new" aria-pressed="' + (state.finish === "new") + '">سكن أول بس</button></div></div>'
+    + (active ? '<button type="button" class="clear" id="f-clear">مسح كل الفلاتر</button>' : '')
+    + '</details>'
+    + '<div class="grid">' + (list.map(cardHtml).join("") || '<div class="empty">مفيش شقق بالمواصفات دي دلوقتي. جرّب تشيل فلتر أو اتنين.</div>') + '</div>';
+  document.getElementById("f-sort").addEventListener("change", function(){ state.sort = this.value; renderList(); document.getElementById("f-sort").focus(); });
+  document.getElementById("fpanel").addEventListener("click", function(e){
+    var b = e.target.closest("[data-g]"); if (!b) return;
+    var g = b.dataset.g, v = b.dataset.v;
+    if (g === "zones" || g === "rooms") { var i = state[g].indexOf(v); if (i >= 0) state[g].splice(i, 1); else state[g].push(v); }
+    else state[g] = String(state[g]) === v ? "" : v;
+    renderList();
+    var again = document.querySelector('[data-g="' + g + '"][data-v="' + v + '"]'); if (again) again.focus();
+  });
+  var cl = document.getElementById("f-clear");
+  if (cl) cl.addEventListener("click", function(){ var so = state.sort; state = fresh(state.deal); state.sort = so; renderList(); });
 }
 function renderSaved(){
   view = "saved"; current = null;

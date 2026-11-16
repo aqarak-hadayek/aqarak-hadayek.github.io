@@ -315,6 +315,32 @@ body.full .stick,body.full .top{display:none}
 .sk{border-radius:16px;background:linear-gradient(100deg,var(--line) 30%,var(--surface) 50%,var(--line) 70%);background-size:300% 100%;animation:sk 1.4s linear infinite;aspect-ratio:4/5}
 @keyframes sk{to{background-position:-150% 0}}
 @media (prefers-reduced-motion:reduce){.sk{animation:none}.card,.zone img{transition:none}.card:hover{transform:none}}
+/* rent / sale: two loud, colour-coded choices */
+:root{--rent:#1463d6;--sale:#c0741a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--rent:#4f8ff0;--sale:#e39a3d}}
+:root[data-theme="dark"]{--rent:#4f8ff0;--sale:#e39a3d}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:none;padding:0;margin-bottom:14px;width:100%}
+.seg button{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;border-radius:12px;font-size:1.1rem;font-weight:800;border:2px solid var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 9%,var(--surface));transition:transform .12s ease}
+.seg button .ic{width:22px;height:22px}
+.seg .d-rent{--c:var(--rent)}.seg .d-sale{--c:var(--sale)}
+.seg button:hover{background:color-mix(in srgb,var(--c) 18%,var(--surface))}
+.seg button[aria-pressed="true"]{background:var(--c);color:#fff;box-shadow:0 6px 18px color-mix(in srgb,var(--c) 40%,transparent)}
+.seg button:active{transform:scale(.98)}
+.go-rent{background:var(--rent);color:#fff}.go-sale{background:var(--sale);color:#fff}
+.tag-rent{background:var(--rent)}.tag-sale{background:var(--sale)}
+.nav a[data-nav="rent"],.nav a[data-nav="sale"]{font-weight:700;border-radius:999px;padding:6px 16px;color:#fff}
+.nav a[data-nav="rent"]{background:var(--rent)}.nav a[data-nav="sale"]{background:var(--sale)}
+.nav a[data-nav="rent"]:hover,.nav a[data-nav="sale"]:hover{color:#fff;filter:brightness(1.08)}
+.nav a[data-nav="rent"][aria-current="page"],.nav a[data-nav="sale"][aria-current="page"]{color:#fff;box-shadow:0 0 0 2px var(--surface),0 0 0 4px currentColor;border-radius:999px}
+.nav a[data-nav="rent"][aria-current="page"]{background:var(--rent);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--rent)}
+.nav a[data-nav="sale"][aria-current="page"]{background:var(--sale);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--sale)}
+@media (max-width:760px){
+  .tabbar a[data-nav="rent"]{color:var(--rent)}.tabbar a[data-nav="sale"]{color:var(--sale)}
+  .tabbar a[data-nav="rent"][aria-current="page"],.tabbar a[data-nav="sale"][aria-current="page"]{color:#fff}
+  .tabbar a[data-nav="rent"][aria-current="page"]{background:var(--rent)}.tabbar a[data-nav="sale"][aria-current="page"]{background:var(--sale)}
+  .tabbar a[data-nav="rent"],.tabbar a[data-nav="sale"]{margin:5px 6px;border-radius:12px;padding:4px 0 3px;font-weight:800}
+}
+@media (prefers-reduced-motion:reduce){.seg button{transition:none}}
 </style>
 </head>
 <body>
@@ -373,7 +399,9 @@ var P = {
   play:'<path d="M8 5v14l11-7z"/>',
   check:'<path d="m5 12 5 5 9-10"/>',
   phone:'<path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
-  wa:'<path d="M4 20l1.300-4A8 8 0 1 1 8 18.700z"/>'
+  wa:'<path d="M4 20l1.300-4A8 8 0 1 1 8 18.700z"/>',
+  key:'<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/>',
+  bld:'<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 8h1M14 8h1M9 12h1M14 12h1M10 21v-4h4v4"/>'
 };
 function ic(n){ return '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + P[n] + '</svg>'; }
 
@@ -430,7 +458,7 @@ function cardHtml(a){
   return '<article class="card">'
     + '<div class="media"><div class="track" dir="ltr">' + a.imgs.map(function(src, i){ return '<a href="#' + slug(a) + '" tabindex="-1" aria-hidden="true"><img src="' + src + '" alt="" loading="lazy"' + (i ? ' decoding="async"' : '') + '></a>'; }).join("") + '</div>'
     + (a.imgs.length > 1 ? '<button type="button" class="cnav cprev" data-cnav="-1" aria-label="الصورة اللي قبلها">‹</button><button type="button" class="cnav cnext" data-cnav="1" aria-label="الصورة اللي بعدها">›</button>' : '')
-    + '<span class="tag">' + DEAL[a.deal].tag + '</span>'
+    + '<span class="tag tag-' + a.deal + '">' + DEAL[a.deal].tag + '</span>'
     + '<span class="mcount"><span>' + ic("cam") + '<b class="cpos" dir="ltr">1 / ' + a.imgs.length + '</b></span>' + (a.video ? '<span>' + ic("play") + 'فيديو</span>' : '') + '</span></div>'
     + favBtn(a)
     + '<div class="cbody">'
@@ -469,12 +497,12 @@ function renderHome(){
   document.getElementById("app").innerHTML =
     '<section class="hero"' + (heroImg ? ' style="background-image:url(' + heroImg + ')"' : '') + '><div><h1>' + (SITE.heroTitle || "دوّر على شقتك في حدايق الأهرام") + '</h1><p>' + APTS.length + ' عقار بالصور والفيديو وكل التفاصيل</p></div></section>'
     + '<section class="search">'
-    + '<div class="seg" role="group" aria-label="نوع العرض"><button type="button" data-deal="rent" aria-pressed="' + (state.deal === "rent") + '">إيجار</button><button type="button" data-deal="sale" aria-pressed="' + (state.deal === "sale") + '">تمليك</button></div>'
+    + '<div class="seg" role="group" aria-label="نوع العرض"><button type="button" class="d-rent" data-deal="rent" aria-pressed="' + (state.deal === "rent") + '">' + ic("key") + 'إيجار</button><button type="button" class="d-sale" data-deal="sale" aria-pressed="' + (state.deal === "sale") + '">' + ic("bld") + 'تمليك</button></div>'
     + '<form class="fields" id="hs">'
     + '<label class="f" for="h-zone">المنطقة<select id="h-zone" name="zone">' + options([["","كل المناطق"]].concat(F.zones.map(function(z){ return [z, z]; })), state.zones[0] || "") + '</select></label>'
     + '<label class="f" for="h-rooms">الغرف<select id="h-rooms" name="rooms">' + options([["","أي عدد"]].concat(F.rooms.map(function(r){ return [r, r + " غرف"]; })), state.rooms[0] || "") + '</select></label>'
     + '<label class="f" for="h-cap">السعر<select id="h-cap" name="cap">' + options(DEAL[state.deal].caps, state.cap) + '</select></label>'
-    + '<a class="go" id="h-go" href="#' + state.deal + '">عرض ' + APTS.filter(match).length + ' شقة</a>'
+    + '<a class="go go-' + state.deal + '" id="h-go" href="#' + state.deal + '">عرض ' + APTS.filter(match).length + ' شقة</a>'
     + '</form></section>'
     + '<section class="sec"><div class="sec-h"><h2>مختارات</h2><a href="#sale">عرض الكل</a></div><div class="grid">' + latest.map(cardHtml).join("") + '</div></section>'
     + '<section class="sec"><div class="sec-h"><h2>تصفح حسب المنطقة</h2></div><div class="zones chips">'
@@ -491,7 +519,7 @@ function renderHome(){
       : '<p>رقم التواصل هيتضاف قريب.</p>')
     + '</div></section>';
   var app = document.getElementById("app");
-  app.querySelector(".seg").addEventListener("click", function(e){ var d = e.target.dataset.deal; if (d && d !== state.deal) { state = fresh(d); renderHome(); } });
+  app.querySelector(".seg").addEventListener("click", function(e){ var bt = e.target.closest("[data-deal]"), d = bt && bt.dataset.deal; if (d && d !== state.deal) { state = fresh(d); renderHome(); } });
   document.getElementById("hs").addEventListener("change", function(e){ var n = e.target.name, v = e.target.value; if (n === "zone") state.zones = v ? [v] : []; else if (n === "rooms") state.rooms = v ? [v] : []; else state[n] = v; document.getElementById("h-go").textContent = "عرض " + APTS.filter(match).length + " شقة"; });
   document.getElementById("h-go").addEventListener("click", function(){ keep = true; });
   app.querySelector(".chips").addEventListener("click", function(e){

@@ -323,7 +323,7 @@ function toggleFav(code){
 function money(n){ return n.toLocaleString("en-US"); }
 function slug(a){ return "apt-" + a.code.toLowerCase(); }
 function priceHtml(a){ return money(a.price) + ' <small>' + (a.deal === "rent" ? "جنيه / شهر" : "جنيه") + '</small>'; }
-function title(a){ return a.kind + ' ' + a.area + ' متر' + (a.rooms ? '، ' + a.rooms + ' غرف' : ''); }
+function title(a){ return a.kind + (a.area ? ' ' + a.area + ' متر' : '') + (a.rooms ? (a.area ? '، ' : ' ') + a.rooms + ' غرف' : ''); }
 function place(a){ return [a.zone, a.gate, "حدايق الأهرام"].filter(Boolean).join("، "); }
 function waText(t){ return "https://wa.me/" + WA + "?text=" + encodeURIComponent(plain(t)); }
 function waLink(a, intent){
@@ -357,7 +357,7 @@ function cardHtml(a){
     + '<div class="price">' + priceHtml(a) + '</div>'
     + '<h3><a href="#' + slug(a) + '">' + title(a) + '</a></h3>'
     + '<p class="loc">' + ic("pin") + place(a) + '</p>'
-    + '<ul class="specs">' + (a.rooms ? '<li>' + ic("bed") + a.rooms + ' غرف</li>' : '') + (a.baths ? '<li>' + ic("bath") + a.baths + ' حمام</li>' : '') + '<li>' + ic("area") + a.area + ' م²</li>'
+    + '<ul class="specs">' + (a.rooms ? '<li>' + ic("bed") + a.rooms + ' غرف</li>' : '') + (a.baths ? '<li>' + ic("bath") + a.baths + ' حمام</li>' : '') + (a.area ? '<li>' + ic("area") + a.area + ' م²</li>' : '')
     + (a.floor !== null ? '<li>' + ic("floor") + (a.floor === 0 ? "أرضي" : "دور " + a.floor) + '</li>' : '') + '</ul>'
     + '<div class="cfoot"><span class="ref">' + a.code + '</span>'
     + (PHONE ? '<a class="wabtn" href="' + waLink(a) + '">' + ic("wa") + 'واتساب</a>' : '<span class="ref" dir="rtl">' + ago(daysOf(a)) + '</span>') + '</div>'
@@ -428,7 +428,7 @@ function renderList(){
   list.sort(function(x, y){
     if (state.sort === "low") return x.price - y.price;
     if (state.sort === "high") return y.price - x.price;
-    if (state.sort === "big") return y.area - x.area;
+    if (state.sort === "big") return (y.area || 0) - (x.area || 0);
     return daysOf(x) - daysOf(y) || (x.framed ? 1 : 0) - (y.framed ? 1 : 0) || y.imgs.length - x.imgs.length;
   });
   function count(key){ var c = {}; ALL.forEach(function(a){ var v = a[key]; if (v) c[v] = (c[v] || 0) + 1; }); return c; }
@@ -510,7 +510,7 @@ function renderDetail(a){
     + '<span class="pos" id="g-pos" dir="ltr"></span></div>'
     + '<div class="thumbs" id="thumbs">' + shots.map(function(s, i){ return '<button type="button" data-i="' + i + '" aria-label="' + s.label + '"><img src="' + s.src + '" alt="" loading="lazy">' + (s.video ? '<b>' + ic("play") + '</b>' : '') + '</button>'; }).join("") + '</div>'
     + (a.framed ? '<p class="note">الصور دي لقطات من فيديو الشقة.</p>' : '')
-    + '<div class="box"><div class="strip"><div>' + ic("area") + '<b>' + a.area + ' م²</b>المساحة</div><div>' + ic("bed") + '<b>' + (a.rooms || "—") + '</b>غرف</div><div>' + ic("bath") + '<b>' + (a.baths || "—") + '</b>حمام</div><div>' + ic("floor") + '<b>' + (a.floor === null ? "—" : a.floor === 0 ? "أرضي" : a.floor) + '</b>الدور</div></div></div>'
+    + '<div class="box"><div class="strip"><div>' + ic("area") + '<b>' + (a.area ? a.area + ' م²' : "—") + '</b>المساحة</div><div>' + ic("bed") + '<b>' + (a.rooms || "—") + '</b>غرف</div><div>' + ic("bath") + '<b>' + (a.baths || "—") + '</b>حمام</div><div>' + ic("floor") + '<b>' + (a.floor === null ? "—" : a.floor === 0 ? "أرضي" : a.floor) + '</b>الدور</div></div></div>'
     + (a.desc ? '<div class="box"><h2>الوصف</h2><p>' + a.desc + '</p></div>' : '')
     + '<div class="box"><h2>التفاصيل</h2><table class="tbl"><tbody>' + rows + '</tbody></table></div>'
     + '<div class="box"><h2>العدادات والنت</h2><table class="tbl"><tbody>' + meters + '</tbody></table></div>'

@@ -13,6 +13,133 @@
  "listings": [
   {
    "deal": "sale",
+   "added": "2026-11-17",
+   "hidden": false,
+   "kind": "شقة",
+   "zone": "منطقة س",
+   "gate": null,
+   "area": null,
+   "rooms": 3,
+   "baths": 2,
+   "floor": 5,
+   "finish": null,
+   "grade": "سوبر لوكس",
+   "price": 1750000,
+   "pnote": "سعر لسرعة البيع",
+   "meters": [
+    [
+     "المرافق",
+     "كاملة",
+     "ok"
+    ]
+   ],
+   "feats": [
+    "أسانسير",
+    "حمام ماستر",
+    "الدور مش الأخير",
+    "قريبة من الشارع الرئيسي والخدمات"
+   ],
+   "desc": "شقة بتشطيب سوبر لوكس في الدور الخامس (مش الأخير) بأسانسير. 3 غرف و2 حمام منهم ماستر وريسبشن، كاملة المرافق وقريبة من الشارع الرئيسي والخدمات.",
+   "code": "HS-228",
+   "imgs": [
+    "img/HS-228/01.jpg",
+    "img/HS-228/02.jpg",
+    "img/HS-228/03.jpg",
+    "img/HS-228/04.jpg",
+    "img/HS-228/05.jpg",
+    "img/HS-228/06.jpg",
+    "img/HS-228/07.jpg"
+   ],
+   "video": "vid/HS-228.mp4",
+   "framed": true
+  },
+  {
+   "deal": "sale",
+   "added": "2026-11-17",
+   "hidden": false,
+   "kind": "شقة",
+   "code": "HS-227",
+   "zone": "منطقة ل",
+   "gate": null,
+   "area": 148,
+   "rooms": 3,
+   "baths": 2,
+   "floor": 1,
+   "finish": "used",
+   "grade": "ألترا سوبر لوكس",
+   "price": 2700000,
+   "pnote": "البيع لدواعي السفر",
+   "meters": [],
+   "feats": [
+    "ريسبشن كبير",
+    "حديد على الشبابيك",
+    "باب مصفح",
+    "اتسكنت 3 شهور بس"
+   ],
+   "desc": "شقة 148 متر بتشطيب ألترا سوبر لوكس في الدور الأول، اتسكنت 3 شهور بس. 3 غرف وحمامين وريسبشن كبير، بحديد كامل على الشبابيك وباب مصفح.",
+   "imgs": [
+    "img/HS-227/01.jpg",
+    "img/HS-227/02.jpg",
+    "img/HS-227/03.jpg",
+    "img/HS-227/04.jpg",
+    "img/HS-227/05.jpg",
+    "img/HS-227/06.jpg",
+    "img/HS-227/07.jpg",
+    "img/HS-227/08.jpg",
+    "img/HS-227/09.jpg",
+    "img/HS-227/10.jpg",
+    "img/HS-227/11.jpg",
+    "img/HS-227/12.jpg",
+    "img/HS-227/13.jpg",
+    "img/HS-227/14.jpg",
+    "img/HS-227/15.jpg"
+   ],
+   "video": "vid/HS-227.mp4",
+   "framed": false
+  },
+  {
+   "deal": "sale",
+   "added": "2026-11-17",
+   "hidden": true,
+   "kind": "محل",
+   "zone": null,
+   "gate": null,
+   "area": 75,
+   "rooms": null,
+   "baths": null,
+   "floor": 0,
+   "finish": null,
+   "grade": null,
+   "price": 3300000,
+   "pnote": "متأجر حالياً بـ 13,000 جنيه في الشهر",
+   "meters": [
+    [
+     "الكهربا",
+     "عداد",
+     "ok"
+    ]
+   ],
+   "feats": [
+    "على الشارع الرئيسي",
+    "متأجر حالياً",
+    "موقع مميز"
+   ],
+   "desc": "محل 75 متر على الشارع الرئيسي في موقع مميز، بعداد كهرباء. متأجر حالياً كوافير حريمي بإيجار 13,000 جنيه في الشهر.",
+   "code": "HS-226",
+   "imgs": [
+    "img/HS-226/01.jpg",
+    "img/HS-226/02.jpg",
+    "img/HS-226/03.jpg",
+    "img/HS-226/04.jpg",
+    "img/HS-226/05.jpg",
+    "img/HS-226/06.jpg",
+    "img/HS-226/07.jpg"
+   ],
+   "video": "vid/HS-226.mp4",
+   "framed": true
+  },
+  {
+   "deal": "sale",
    "kind": "شقة",
    "added": "2026-11-17",
    "hidden": false,
@@ -1402,6 +1529,35 @@
   "img/HS-225/02.jpg": "800000008000e000f718f718f711f6357e217f017f00fe017f80e79063902780",
   "img/HS-225/03.jpg": "c0e3e0ffe1f0f9d03cd19f78ee3c67f90f730fa1ef82f3b2d8a3cc23ec13e002",
   "img/HS-225/05.jpg": "3f882f042e442f442f4c2e0a2e8a2c8826982fc82f883f983e003e803d803f80",
-  "img/HS-225/06.jpg": "000108010c830d07fcc3fc073c0f3c9d0c990b319e33bea38ce3b8e778677c47"
+  "img/HS-225/06.jpg": "000108010c830d07fcc3fc073c0f3c9d0c990b319e33bea38ce3b8e778677c47",
+  "img/HS-226/01.jpg": "03f903f303f323fa21f9617f027f03e7cfffc3f8e1f1f165e0f8fbf9fff9bde7",
+  "img/HS-226/02.jpg": "7346f746e703fb00f340fbc67f3ccf38fd1bff11b80f9c3de2efe3cfe7f30ff9",
+  "img/HS-226/03.jpg": "303c319821f8287438fc7cdc7fd876c0665478c06980c984d804e600f600e800",
+  "img/HS-226/04.jpg": "8743436349a58034903cb63ea21aca1ac63cc23f82c781ef8e07a00d700f0008",
+  "img/HS-226/05.jpg": "d803683f78983c189c089c1fcc7e4d7c8cf885b8f7b4f7bc779cfc1ee81e621e",
+  "img/HS-226/06.jpg": "fd14f8b2f9a3f981f980b9a2ffb2ff98fe83bc0ffcbdfce7fcfbff38fd64f763",
+  "img/HS-226/07.jpg": "7020b804a984610c7a817e67f436700c985f262efb9e3f241f0087c087fabffd",
+  "img/HS-227/01.jpg": "7c007cc1fcc0ff00fe60fa60fa60fa60fa61ff60ff60ff60ff20ff007e80f880",
+  "img/HS-227/02.jpg": "7c007e00ff00fe00fe00f608f600fac0f8c0f8c0fe00fe00fe00fe00fe00fe00",
+  "img/HS-227/03.jpg": "008c002060001f0005140184409440944094009402901612b212001a106700b6",
+  "img/HS-227/04.jpg": "ffff7fffffff9ffedbfedbd6dbd6dbd6dbd7dbd7dbd7dbefdfffdfbffffffdff",
+  "img/HS-227/05.jpg": "2000fadc405ccd7cc4f944e65ce63ce610e0fcc0f8c0a4c0f0c0f8c0f8e0f0e0",
+  "img/HS-227/06.jpg": "680178007000f080f07070f56cc16ce168e16cc16cc068c068c0f8c0f8e078e0",
+  "img/HS-227/07.jpg": "000000000001c003f007fc0f3f2723e020e6226c226c02e13de071ece3cc4790",
+  "img/HS-227/08.jpg": "08bf00bf00ff01fe01f8c3f0ee401e0c05cc47cc060c4e181e8c3d8c7d06f903",
+  "img/HS-227/09.jpg": "003f003f00bfc27fef9efc702a626a62ec62ee70ee60dc60fef07ec07ef0fee0",
+  "img/HS-227/10.jpg": "7ba0ffe1ffe3ffc3f0f8d0f0dac4c8c4d8c0f0e0fcc0f8c0f8c0f8f0f0f0fcf0",
+  "img/HS-227/11.jpg": "08784802603002230a40121310f02412349024602dc22dc008f008f009f81830",
+  "img/HS-227/12.jpg": "091909600b0d0878320d9a49da00d2f196c0c678c478c4f80418001960007c00",
+  "img/HS-227/13.jpg": "8f00c1008200c000cc00e008f008f00cf05cf0fff0bdf03566dc787e747ffc7f",
+  "img/HS-227/14.jpg": "cf808f00c200c200c000e800e008f808f00cf07cf0f7f0b5f03566fc787fe47e",
+  "img/HS-227/15.jpg": "240074007c0074003c00bc008c009601f720d3603e0070010020040020000000",
+  "img/HS-228/01.jpg": "8050f00b03c0048347830f830f8374d63ac618b02ab83738ffc18c608e5090c8",
+  "img/HS-228/02.jpg": "c3a280f883c183c1c3c1dbebdd73e4796a2c2ece1ff81cc81c89193b1b339c73",
+  "img/HS-228/03.jpg": "fe04fe0097c096589e589c38bc98a9e08fd80ff98effe1f360c01f004ff0cc6c",
+  "img/HS-228/04.jpg": "f027f066f066f006f000f181618218c61806262e062f8fe647e60fe20be003e0",
+  "img/HS-228/05.jpg": "fe3cfe3afe7c7f7c7f4a7e5a7e127e767e667e627ee26ee06f606e607f007e04",
+  "img/HS-228/06.jpg": "ab0ecf7fcff0b9f1bdf1bcf3dce1dde1dd21c587e181f6e0f6f8f3e1fbe4f3e0",
+  "img/HS-228/07.jpg": "42bf4019d218d218f0194e984e5a7b12319238f033700e053839e089f0ddd85d"
  }
 }

@@ -169,6 +169,9 @@ ol{padding-inline-start:20px;margin:8px 0}
       <label for="s-contactTitle" class="wide">عنوان قسم التواصل<input id="s-contactTitle"></label>
       <label for="s-contactLead" class="wide">وصف قسم التواصل<input id="s-contactLead"></label>
       <label for="s-footerText" class="wide">نص الفوتر<input id="s-footerText"></label>
+      <label for="s-waListing" class="wide">رسالة الواتساب من صفحة الشقة<textarea id="s-waListing"></textarea></label>
+      <p class="hint wide" style="grid-column:1/-1;margin:-8px 0 0">الكلمات دي بتتبدل لوحدها: {intent} طلب العميل، {code} الكود، {deal} إيجار أو تمليك، {title} وصف مختصر، {price} السعر، {link} لينك الشقة.</p>
+      <label for="s-waGeneral" class="wide">رسالة الواتساب العامة (من زرار واتساب فوق)<textarea id="s-waGeneral"></textarea></label>
       <label for="s-notice" class="wide">شريط تنبيه فوق الموقع (سيبه فاضي لو مش عايزه)<input id="s-notice"></label>
     </div>
     <div class="bar"><button class="btn main" type="submit">حفظ ونشر</button><span id="smsg"></span></div>
@@ -411,10 +414,10 @@ $("b-del").addEventListener("click", function(){
 });
 
 // ---- إعدادات الموقع
-var SKEYS = ["name","phone","eyebrow","heroTitle","heroLead","contactTitle","contactLead","footerText","notice"];
+var SKEYS = ["name","phone","eyebrow","heroTitle","heroLead","contactTitle","contactLead","footerText","notice","waListing","waGeneral"];
 function fillSite(){ SKEYS.forEach(function(k){ $("s-" + k).value = data.site[k] || ""; }); say($("smsg"), ""); }
 $("f-site").addEventListener("submit", function(e){
-  e.preventDefault(); SKEYS.forEach(function(k){ data.site[k] = $("s-" + k).value.trim(); });
+  e.preventDefault(); SKEYS.forEach(function(k){ data.site[k] = $("s-" + k).value.replace(/\s+$/, ""); });
   say($("smsg"), "بحفظ...");
   saveData("تعديل إعدادات الموقع").then(function(){ say($("smsg"), "اتحفظ. التعديل هيظهر على الموقع خلال دقيقة أو اتنين.", "good"); })
     .catch(function(err){ say($("smsg"), "ما اتحفظش: " + err.message, "bad"); });

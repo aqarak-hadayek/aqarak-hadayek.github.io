@@ -231,6 +231,14 @@ footer{padding:0;border-top:1px solid var(--line);margin-top:20px}
 .thumbs button{position:relative;overflow:hidden;background:#000}
 .thumbs button b{position:absolute;inset:0;display:grid;place-items:center;color:#fff;background:rgba(0,0,0,.45);font-size:1.1rem}
 .note{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+.cta .quick{display:flex;flex-wrap:wrap;gap:8px}
+.cta .quick a{flex:1 1 150px;background:transparent;color:inherit;border:1px solid currentColor;font-family:var(--font-body);font-weight:600;font-size:.9rem;padding:8px}
+.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px;margin-top:16px}
+.req h3{grid-column:1/-1;font-family:var(--font-display);font-size:1.05rem;margin:0}
+.req label{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted)}
+.req label.wide{grid-column:1/-1}
+.req input,.req select{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;color:var(--ink);font:inherit}
+.req .send{grid-column:1/-1;justify-self:start;background:var(--tag);color:var(--tag-ink);text-decoration:none;font-family:var(--font-display);font-weight:700;padding:11px 24px;border-radius:999px}
 </style>
 </head>
 <body>
@@ -266,7 +274,8 @@ function escAll(v){
 function daysOf(a){ var d = Math.floor((Date.now() - new Date(a.added + "T00:00:00").getTime()) / 86400000); return isNaN(d) || d < 0 ? 0 : d; }
 function contactHtml(a){
   if (!PHONE) return '<div class="cta"><p>رقم التواصل هيتضاف قريب.' + (a ? ' احفظ كود الشقة: ' + a.code : '') + '</p></div>';
-  return '<div class="cta"><a href="' + waLink(a) + '">اسأل عن الشقة دي على واتساب</a>'
+  return '<div class="cta"><a href="' + waLink(a, INTENTS[0][1]) + '">احجز معاينة على واتساب</a>'
+    + '<div class="quick">' + INTENTS.slice(1).map(function(x){ return '<a href="' + waLink(a, x[1]) + '">' + (x[0] === "info" ? "اسأل عن تفاصيل أكتر" : "اسأل عن التفاوض في السعر") + '</a>'; }).join("") + '</div>'
     + '<p>أو اتصل على <span dir="ltr">' + PHONE + '</span> وقول الكود ' + a.code + '</p></div>';
 }
 var DEAL = {
@@ -307,9 +316,24 @@ function finishPill(a){
   if (a.grade) return '<span class="pill plain">' + a.grade + '</span>';
   return '';
 }
-function waLink(a){
-  var t = a ? "عايز أستفسر عن الشقة كود " + a.code + " (" + DEAL[a.deal].name + ")" : "عايز أستفسر عن شقة في حدايق الأهرام";
-  return "https://wa.me/" + WA + "?text=" + encodeURIComponent(t);
+var INTENTS = [["view","عايز أعاين الشقة دي"],["info","عايز تفاصيل أكتر عن الشقة دي"],["price","عايز أعرف السعر قابل للتفاوض ولا لأ"]];
+function plain(t){ return String(t).replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&amp;/g,"&"); }
+function waText(t){ return "https://wa.me/" + WA + "?text=" + encodeURIComponent(plain(t)); }
+function waLink(a, intent){
+  if (!a) return waText(SITE.waGeneral || "عايز أستفسر عن شقة في حدايق الأهرام");
+  var tpl = SITE.waListing || "{intent}\nكود الشقة: {code} ({deal})";
+  var map = {intent:intent || "عايز أستفسر عن الشقة دي", code:a.code, deal:DEAL[a.deal].name, title:title(a),
+             price:money(a.price) + (a.deal === "rent" ? " جنيه في الشهر" : " جنيه"), link:location.href.split("#")[0] + "#" + slug(a)};
+  return waText(tpl.replace(/\{(\w+)\}/g, function(m, k){ return map[k] === undefined ? m : map[k]; }));
+}
+function requestLink(){
+  var g = function(id){ var e = document.getElementById(id); return e ? e.value : ""; };
+  var lines = ["السلام عليكم، بدوّر على شقة " + g("r-deal") + " في حدايق الأهرام."];
+  if (g("r-rooms")) lines.push("عدد الغرف: " + g("r-rooms"));
+  if (g("r-zone")) lines.push("المنطقة: " + g("r-zone"));
+  if (g("r-budget")) lines.push("الميزانية: " + g("r-budget"));
+  if (g("r-note")) lines.push("ملاحظات: " + g("r-note"));
+  return waText(lines.join("\n"));
 }
 function favBtn(a, inline){
   var on = !!favs[a.code];
@@ -363,7 +387,17 @@ function renderHome(){
     + '<li><h3>عاين</h3><p>نتفق على ميعاد وتنزل تشوف الشقة على الطبيعة.</p></li>'
     + '</ol></section>'
     + '<section class="sec" id="contact"><div class="contact"><div><h2>' + SITE.contactTitle + '</h2><p>' + SITE.contactLead + '</p></div>'
-    + (PHONE ? '<div class="acts"><span dir="ltr">' + PHONE + '</span><a href="' + waLink(null) + '">كلّمنا على واتساب</a></div>' : '<div class="acts"><span>رقم التواصل هيتضاف قريب</span></div>') + '</div></section>';
+    + (PHONE ? '<div class="acts"><span dir="ltr">' + PHONE + '</span><a href="' + waLink(null) + '">كلّمنا على واتساب</a></div>' : '<div class="acts"><span>رقم التواصل هيتضاف قريب</span></div>') + '</div>'
+    + (PHONE ? '<form class="req" id="req"><h3>أو ابعت طلبك جاهز</h3>'
+      + '<label for="r-deal">عايز<select id="r-deal"><option>إيجار</option><option>تمليك</option></select></label>'
+      + '<label for="r-rooms">عدد الغرف<select id="r-rooms"><option value="">أي عدد</option><option>2</option><option>3</option><option>4 أو أكتر</option></select></label>'
+      + '<label for="r-zone">المنطقة أو البوابة<input id="r-zone" placeholder="مثلاً منطقة ط"></label>'
+      + '<label for="r-budget">الميزانية<input id="r-budget" placeholder="مثلاً لحد 3 مليون"></label>'
+      + '<label for="r-note" class="wide">ملاحظات<input id="r-note" placeholder="دور معين، أسانسير، قرب خدمات..."></label>'
+      + '<a class="send" id="r-send" href="' + waLink(null) + '">ابعت الطلب على واتساب</a></form>' : '')
+    + '</section>';
+  var rf = document.getElementById("req");
+  if (rf) { var upd = function(){ document.getElementById("r-send").href = requestLink(); }; rf.addEventListener("input", upd); rf.addEventListener("submit", function(e){ e.preventDefault(); }); upd(); }
 }
 
 function options(list, cur){
@@ -514,7 +548,7 @@ function route(){
 }
 function boot(data){
   data = escAll(data);
-  SITE = data.site || {}; PHONE = (SITE.phone || "").replace(/[^0-9]/g, ""); WA = "2" + PHONE;
+  SITE = data.site || {}; PHONE = (SITE.phone || "").replace(/[^0-9]/g, ""); if (PHONE.indexOf("20") === 0) PHONE = "0" + PHONE.slice(2); WA = "2" + PHONE;
   APTS = (data.listings || []).filter(function(a){ return !a.hidden; });
   APTS.forEach(function(a){ a.imgs = a.imgs || []; a.feats = a.feats || []; a.meters = a.meters || []; if (a.floor === undefined) a.floor = null; });
   document.title = (SITE.name || "") + " | شقق إيجار وتمليك في حدايق الأهرام";

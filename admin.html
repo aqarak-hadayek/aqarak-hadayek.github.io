@@ -222,7 +222,7 @@ function load(){
       .catch(function(){ priv = null; });
   }).then(function(){ $("tabs").hidden = false; say($("l-msg"), ""); renderList(); show("list"); });
 }
-$("l-owner").value = cfg.owner || "mf119233-create"; $("l-repo").value = cfg.repo || "aqarak"; $("l-priv").value = cfg.priv === undefined ? "aqarak-private" : cfg.priv; $("l-token").value = cfg.token || "";
+$("l-owner").value = cfg.owner || "aqarak-hadayek"; $("l-repo").value = cfg.repo || "aqarak-hadayek.github.io"; $("l-priv").value = cfg.priv === undefined ? "private-data" : cfg.priv; $("l-token").value = cfg.token || "";
 $("f-login").addEventListener("submit", function(e){
   e.preventDefault();
   cfg = {owner:$("l-owner").value.trim(), repo:$("l-repo").value.trim(), priv:$("l-priv").value.trim(), token:$("l-token").value.trim()};

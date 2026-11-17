@@ -16,6 +16,55 @@
    "added": "2026-11-17",
    "hidden": false,
    "kind": "شقة",
+   "zone": "منطقة أ",
+   "gate": null,
+   "area": 180,
+   "rooms": null,
+   "baths": null,
+   "floor": 1,
+   "finish": null,
+   "grade": null,
+   "price": 2500000,
+   "pnote": null,
+   "meters": [
+    [
+     "الكهربا",
+     "عداد",
+     "ok"
+    ],
+    [
+     "الغاز",
+     "عداد",
+     "ok"
+    ],
+    [
+     "المياه",
+     "عداد",
+     "ok"
+    ]
+   ],
+   "feats": [
+    "واجهة",
+    "على الشارع الرئيسي",
+    "قريبة من البوابة"
+   ],
+   "desc": "شقة 180 متر واجهة في الدور الأول، على الشارع الرئيسي وخطوات من البوابة. كاملة العدادات: غاز وكهربا ومياه.",
+   "code": "HS-229",
+   "imgs": [
+    "img/HS-229/07.jpg",
+    "img/HS-229/06.jpg",
+    "img/HS-229/03.jpg",
+    "img/HS-229/04.jpg",
+    "img/HS-229/01.jpg"
+   ],
+   "video": "vid/HS-229.mp4",
+   "framed": true
+  },
+  {
+   "deal": "sale",
+   "added": "2026-11-17",
+   "hidden": false,
+   "kind": "شقة",
    "zone": "منطقة س",
    "gate": null,
    "area": null,
@@ -1558,6 +1607,11 @@
   "img/HS-228/04.jpg": "f027f066f066f006f000f181618218c61806262e062f8fe647e60fe20be003e0",
   "img/HS-228/05.jpg": "fe3cfe3afe7c7f7c7f4a7e5a7e127e767e667e627ee26ee06f606e607f007e04",
   "img/HS-228/06.jpg": "ab0ecf7fcff0b9f1bdf1bcf3dce1dde1dd21c587e181f6e0f6f8f3e1fbe4f3e0",
-  "img/HS-228/07.jpg": "42bf4019d218d218f0194e984e5a7b12319238f033700e053839e089f0ddd85d"
+  "img/HS-228/07.jpg": "42bf4019d218d218f0194e984e5a7b12319238f033700e053839e089f0ddd85d",
+  "img/HS-229/01.jpg": "8479867b8e5b8c7c8c588f508e40cc00cf06cf448440c450e01ce00be80320c1",
+  "img/HS-229/03.jpg": "070d064d066d06790679267b027a027a221a621a03f0067086510e110e112634",
+  "img/HS-229/04.jpg": "b843b8c33cc33ce3b8c3bce3bce7ff9effccffa8ffeae7b8e600ac00d800f808",
+  "img/HS-229/06.jpg": "801f00f700f8810ec14ce14ce14ec14ec04ec08e6087a08000ae079c3dc8fbe9",
+  "img/HS-229/07.jpg": "ff00fcf0fc78f004f600f600f600e4a0e580e598e580e180c180e400e180e9c0"
  }
 }

@@ -851,7 +851,7 @@ function aptFromHref(href){
   var h = location.hash.replace("#", "");
   return APTS.filter(function(x){ return slug(x) === h; })[0] || null;
 }
-var LEADS_URL = ""; // رابط Google Apps Script (Web app)
+var LEADS_URL = "https://script.google.com/macros/s/AKfycbxedFzuNzc2LhS7mqRC06kSxS1MazleYkSlidQE2JXj1IwR4ZEbZ9XqC7eVkeXtBsTJ/exec"; // رابط Google Apps Script (Web app)
 function leadDone(){ try { return localStorage.getItem("aq_lead") === "1"; } catch(e){ return false; } }
 function leadForm(href, a, placement){
   var m = document.getElementById("lm");

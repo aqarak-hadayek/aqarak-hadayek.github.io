@@ -885,6 +885,9 @@ function leadForm(href, a, placement){
                zone:a ? (a.zone || "") : "", placement:placement, page:location.href};
     if (LEADS_URL) try { fetch(LEADS_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(row)}); } catch(err){}
     try { localStorage.setItem("aq_who", JSON.stringify({name:name, phone:ph})); } catch(err){}
+    var go = document.getElementById("lm-go"), base = href.split("?text=");
+    var txt = ""; try { txt = decodeURIComponent(base[1] || ""); } catch(err){}
+    go.href = base[0] + "?text=" + encodeURIComponent(txt + (txt ? "\n\n" : "") + "الاسم: " + name + "\nرقم الواتساب: " + ph);
     f.hidden = true; ok.hidden = false;
   };
   var who = leadSaved(); document.getElementById("lm-n").value = who.name || ""; document.getElementById("lm-p").value = who.phone || "";

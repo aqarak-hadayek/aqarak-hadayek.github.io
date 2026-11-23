@@ -13,6 +13,77 @@
  "listings": [
   {
    "deal": "sale",
+   "added": "2026-11-20",
+   "hidden": false,
+   "code": "HS-231",
+   "kind": "فيلا أرضي بجاردن",
+   "zone": "منطقة و",
+   "gate": null,
+   "area": 200,
+   "rooms": 3,
+   "baths": 3,
+   "floor": 0,
+   "finish": "new",
+   "grade": "ألترا سوبر لوكس",
+   "price": 3500000,
+   "pnote": null,
+   "meters": [],
+   "feats": [
+    "واجهة",
+    "جاردن أمامي وخلفي",
+    "شلال في الجاردن",
+    "مدخل سيارة",
+    "غرفة ماستر",
+    "ريسبشن 3 قطع",
+    "مباني 2025"
+   ],
+   "desc": "فيلا أرضي واجهة 200 متر بجاردن أمامي وخلفي فيه شلال ومدخل سيارة، في عمارة جديدة مباني 2025، خطوات من البوابة التانية القديمة والتالتة. تشطيب ألترا سوبر لوكس. 3 غرف نوم منهم ماستر، 3 حمام، وريسبشن 3 قطع. متاح فيلتين بنفس المواصفات في نفس العمارة.",
+   "imgs": [
+    "img/HS-231/01.jpg",
+    "img/HS-231/02.jpg",
+    "img/HS-231/03.jpg",
+    "img/HS-231/04.jpg",
+    "img/HS-231/05.jpg"
+   ],
+   "video": "vid/HS-231.mp4",
+   "framed": false
+  },
+  {
+   "deal": "sale",
+   "added": "2026-11-18",
+   "hidden": false,
+   "kind": "شقة",
+   "zone": "منطقة و",
+   "gate": null,
+   "area": 200,
+   "rooms": 3,
+   "baths": 2,
+   "floor": 5,
+   "finish": null,
+   "grade": "نص تشطيب",
+   "price": 1900000,
+   "pnote": null,
+   "meters": [],
+   "feats": [
+    "واجهة",
+    "بلكونة على الواجهة",
+    "قريبة من البوابة",
+    "نموذج تصالح 8",
+    "فوقها السطح"
+   ],
+   "desc": "شقة 200 متر واجهة نص تشطيب، خطوات من البوابة، في الدور الخامس وفوقها السطح. 3 غرف نوم و2 حمام وريسبشن وبلكونة على الواجهة. معاها نموذج تصالح 8.",
+   "code": "HS-230",
+   "imgs": [
+    "img/HS-230/01.jpg",
+    "img/HS-230/02.jpg",
+    "img/HS-230/03.jpg",
+    "img/HS-230/04.jpg"
+   ],
+   "video": "vid/HS-230.mp4",
+   "framed": true
+  },
+  {
+   "deal": "sale",
    "added": "2026-11-17",
    "hidden": false,
    "kind": "شقة",
@@ -1612,6 +1683,15 @@
   "img/HS-229/03.jpg": "070d064d066d06790679267b027a027a221a621a03f0067086510e110e112634",
   "img/HS-229/04.jpg": "b843b8c33cc33ce3b8c3bce3bce7ff9effccffa8ffeae7b8e600ac00d800f808",
   "img/HS-229/06.jpg": "801f00f700f8810ec14ce14ce14ec14ec04ec08e6087a08000ae079c3dc8fbe9",
-  "img/HS-229/07.jpg": "ff00fcf0fc78f004f600f600f600e4a0e580e598e580e180c180e400e180e9c0"
+  "img/HS-229/07.jpg": "ff00fcf0fc78f004f600f600f600e4a0e580e598e580e180c180e400e180e9c0",
+  "img/HS-231/01.jpg": "c3ffb8ff8f1f77e763eb1c6708676867606727c770fff878cdc0eec4d39d5139",
+  "img/HS-231/02.jpg": "0078103978788cf0c071d8703e61f16df16cf168b67001704e50c438c431f830",
+  "img/HS-231/03.jpg": "46fd4ee28ffe8ffe1ffc1fe40f7c3e203c2c3c6c7e6c7f0cd248dad8bcc82f40",
+  "img/HS-231/04.jpg": "dc06fe00fe60bc38ff20c324cf2af98af1cae58aef0ae112f9b8b8e8b8f2dfb0",
+  "img/HS-231/05.jpg": "c9c783e74fe31e39700cc0c6f06170604a680a680e484e404a404b004860b028",
+  "img/HS-230/01.jpg": "020442037107e01fc21fc61fce1ff83ff81ff81f900f1c0e0e0c1a0c191c1438",
+  "img/HS-230/02.jpg": "006c000c042c340e300f3c0f1c869b0698069c869cf2d7f2e27e687f63bb13f3",
+  "img/HS-230/03.jpg": "fe00fe00fc00fc00fc00fc80f800ff80ff00fe00fe009000dc00fc263e633fe7",
+  "img/HS-230/04.jpg": "04ce82c685b9c732ff82ff06fe0efe0efe0ebc46f85ee03ec01cc03e01b70203"
  }
 }

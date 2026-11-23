@@ -364,6 +364,16 @@ body.full .stick,body.full .top{display:none}
 .support:hover{padding-inline-start:18px}
 body.full .support,body.sheet .support{display:none}
 @media (max-width:760px){.support{font-size:.82rem;padding:9px 8px;top:auto;bottom:84px;transform:none}.helpcta em{display:none}}
+.lm{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.lm[hidden]{display:none}
+.lm .lbox{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;max-width:400px;width:100%;padding:22px;position:relative}
+.lm h2{font-size:1.2rem;margin:0 0 4px}.lm p{color:var(--muted);margin:0 0 14px;font-size:.92rem}
+.lm label{display:block;font-weight:600;font-size:.9rem;margin-bottom:10px}
+.lm input{display:block;width:100%;margin-top:4px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.lm .lerr{color:#d33;font-size:.85rem;min-height:1.2em;margin:0 0 8px}
+.lm .wabtn{width:100%;padding:12px;font-size:1rem}
+.lm .lx{position:absolute;top:10px;left:12px;background:none;border:0;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1}
+.lm .lskip{display:block;text-align:center;margin-top:12px;font-size:.88rem;color:var(--muted);text-decoration:underline}
 </style>
 <!-- Meta Pixel -->
 <script>
@@ -717,7 +727,7 @@ function renderHelp(){
       + (r.list.length ? '<div class="sec-h" style="margin-top:22px"><h2>أقرب حاجة لطلبك</h2></div><div class="grid">' + r.list.map(cardHtml).join("") + '</div>' : '');
     out.scrollIntoView({block:"start"});
   }
-  document.getElementById("hf").addEventListener("submit", function(e){ e.preventDefault(); if (box.value.trim()) px("track", "Lead", {content_name:"ساعدني أساعدك"}); run(); });
+  document.getElementById("hf").addEventListener("submit", function(e){ e.preventDefault(); if (box.value.trim()) px("trackCustom", "HelpSearch", {content_name:"ساعدني أساعدك"}); run(); });
   var mic = document.getElementById("h-mic");
   if (mic) {
     var rec = null, base = "";
@@ -841,14 +851,53 @@ function aptFromHref(href){
   var h = location.hash.replace("#", "");
   return APTS.filter(function(x){ return slug(x) === h; })[0] || null;
 }
+var LEADS_URL = ""; // رابط Google Apps Script (Web app)
+function leadDone(){ try { return localStorage.getItem("aq_lead") === "1"; } catch(e){ return false; } }
+function leadForm(href, a, placement){
+  var m = document.getElementById("lm");
+  if (!m) {
+    m = document.createElement("div"); m.id = "lm"; m.className = "lm"; m.hidden = true;
+    m.innerHTML = '<div class="lbox" role="dialog" aria-modal="true" aria-labelledby="lm-h"><button type="button" class="lx" aria-label="إغلاق">×</button>'
+      + '<h2 id="lm-h">سجّل رقمك وهنكلمك على واتساب</h2><p id="lm-sub">خدمة العملاء هتتواصل معاك في أسرع وقت.</p>'
+      + '<form id="lm-f" novalidate><label>الاسم<input id="lm-n" autocomplete="name" required></label>'
+      + '<label>رقم الواتساب<input id="lm-p" type="tel" inputmode="numeric" dir="ltr" placeholder="01xxxxxxxxx" autocomplete="tel" required></label>'
+      + '<p class="lerr" id="lm-e"></p><button type="submit" class="wabtn">' + ic("wa") + 'سجّل رقمي</button></form>'
+      + '<div id="lm-ok" hidden><h2>تمام، استلمنا رقمك ✓</h2><p>هنكلمك على واتساب قريب جدًا.</p><a class="wabtn" id="lm-go" target="_blank" rel="noopener">' + ic("wa") + 'أو كلّمنا إنت دلوقتي</a></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener("click", function(e){ if (e.target === m || e.target.classList.contains("lx")) m.hidden = true; });
+    document.addEventListener("keydown", function(e){ if (e.key === "Escape") m.hidden = true; });
+  }
+  var f = document.getElementById("lm-f"), ok = document.getElementById("lm-ok");
+  f.hidden = false; ok.hidden = true; document.getElementById("lm-e").textContent = "";
+  document.getElementById("lm-sub").textContent = a ? "على شقة " + a.code + " (" + DEAL[a.deal].name + ")، خدمة العملاء هتتواصل معاك في أسرع وقت." : "خدمة العملاء هتتواصل معاك في أسرع وقت.";
+  document.getElementById("lm-go").href = href;
+  f.onsubmit = function(e){
+    e.preventDefault();
+    var name = document.getElementById("lm-n").value.trim();
+    var ph = document.getElementById("lm-p").value.replace(/[٠-٩]/g, function(d){ return "٠١٢٣٤٥٦٧٨٩".indexOf(d); }).replace(/[^0-9]/g, "");
+    if (ph.indexOf("20") === 0) ph = "0" + ph.slice(2);
+    if (!name) { document.getElementById("lm-e").textContent = "اكتب اسمك."; return; }
+    if (!/^01[0125][0-9]{8}$/.test(ph)) { document.getElementById("lm-e").textContent = "اكتب رقم موبايل مصري صحيح، 11 رقم يبدأ بـ 01."; return; }
+    var p = aptParams(a), id = "L" + Date.now() + Math.random().toString(36).slice(2, 6);
+    p.placement = placement;
+    px("track", "Lead", p, {eventID:id});
+    var row = {id:id, name:name, phone:ph, code:a ? a.code : "", deal:a ? DEAL[a.deal].name : "", title:a ? title(a) : "", price:a ? a.price : "",
+               zone:a ? (a.zone || "") : "", placement:placement, page:location.href};
+    if (LEADS_URL) try { fetch(LEADS_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(row)}); } catch(err){}
+    try { localStorage.setItem("aq_lead", "1"); } catch(err){}
+    f.hidden = true; ok.hidden = false;
+  };
+  m.hidden = false; setTimeout(function(){ document.getElementById("lm-n").focus(); }, 50);
+}
 document.addEventListener("click", function(e){
   var l = e.target.closest && e.target.closest("a[href]"); if (!l) return;
   var href = l.getAttribute("href") || "";
+  if (l.id === "lm-go") { px("trackCustom", "WhatsAppClick", {placement:"after_lead"}); return; }
   if (href.indexOf("wa.me/") !== -1) {
     var a = aptFromHref(href), p = aptParams(a);
     p.placement = l.id || (l.closest(".helpbox,#h-out") ? "help" : l.closest(".stick") ? "sticky" : location.hash.replace("#", "") || "home");
     px("trackCustom", "WhatsAppClick", p);
-    px("track", "Contact", p);
+    if (!leadDone()) { e.preventDefault(); leadForm(href, a, p.placement); }
   } else if (href.indexOf("tel:") === 0) {
     px("trackCustom", "PhoneClick", aptParams(aptFromHref("")));
   }
@@ -879,7 +928,7 @@ function route(){
 }
 function boot(data){
   data = escAll(data);
-  SITE = data.site || {}; PHONE = (SITE.phone || "").replace(/[^0-9]/g, ""); if (PHONE.indexOf("20") === 0) PHONE = "0" + PHONE.slice(2); WA = "2" + PHONE;
+  SITE = data.site || {}; if (SITE.leadsUrl) LEADS_URL = SITE.leadsUrl; PHONE = (SITE.phone || "").replace(/[^0-9]/g, ""); if (PHONE.indexOf("20") === 0) PHONE = "0" + PHONE.slice(2); WA = "2" + PHONE;
   APTS = (data.listings || []).filter(function(a){ return !a.hidden; });
   APTS.forEach(function(a){ a.imgs = a.imgs || []; a.feats = a.feats || []; a.meters = a.meters || []; if (a.floor === undefined) a.floor = null; });
   document.title = (SITE.name || "") + " | شقق إيجار وتمليك في حدايق الأهرام";

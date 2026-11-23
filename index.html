@@ -365,6 +365,12 @@ body.full .stick,body.full .top{display:none}
 body.full .support,body.sheet .support{display:none}
 @media (max-width:760px){.support{font-size:.82rem;padding:9px 8px;top:auto;bottom:84px;transform:none}.helpcta em{display:none}}
 </style>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1686350126238397');fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1686350126238397&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
 <header class="top">
@@ -711,7 +717,7 @@ function renderHelp(){
       + (r.list.length ? '<div class="sec-h" style="margin-top:22px"><h2>أقرب حاجة لطلبك</h2></div><div class="grid">' + r.list.map(cardHtml).join("") + '</div>' : '');
     out.scrollIntoView({block:"start"});
   }
-  document.getElementById("hf").addEventListener("submit", function(e){ e.preventDefault(); run(); });
+  document.getElementById("hf").addEventListener("submit", function(e){ e.preventDefault(); if (box.value.trim()) px("track", "Lead", {content_name:"ساعدني أساعدك"}); run(); });
   var mic = document.getElementById("h-mic");
   if (mic) {
     var rec = null, base = "";
@@ -824,6 +830,29 @@ document.getElementById("app").addEventListener("click", function(e){
 });
 var memo = {}, lastHash = null, lastView = null;
 document.addEventListener("keydown", function(e){ if (e.key === "Escape") document.body.classList.remove("full", "sheet"); });
+
+// ---- Meta Pixel events
+function px(){ if (window.fbq) try { fbq.apply(null, arguments); } catch(e){} }
+function aptParams(a){ return a ? {content_ids:[a.code], content_type:"home_listing", content_name:title(a), content_category:DEAL[a.deal].name, deal:a.deal, zone:a.zone || "", value:a.price, currency:"EGP"} : {}; }
+function aptFromHref(href){
+  var t = ""; try { t = decodeURIComponent((href.split("text=")[1] || "")); } catch(e){}
+  var hit = APTS.filter(function(x){ return t.indexOf(x.code) !== -1; })[0];
+  if (hit) return hit;
+  var h = location.hash.replace("#", "");
+  return APTS.filter(function(x){ return slug(x) === h; })[0] || null;
+}
+document.addEventListener("click", function(e){
+  var l = e.target.closest && e.target.closest("a[href]"); if (!l) return;
+  var href = l.getAttribute("href") || "";
+  if (href.indexOf("wa.me/") !== -1) {
+    var a = aptFromHref(href), p = aptParams(a);
+    p.placement = l.id || (l.closest(".helpbox,#h-out") ? "help" : l.closest(".stick") ? "sticky" : location.hash.replace("#", "") || "home");
+    px("trackCustom", "WhatsAppClick", p);
+    px("track", "Contact", p);
+  } else if (href.indexOf("tel:") === 0) {
+    px("trackCustom", "PhoneClick", aptParams(aptFromHref("")));
+  }
+}, true);
 function route(){
   var h = location.hash.replace("#", "");
   if (lastHash !== null) memo[lastHash] = window.scrollY;
@@ -831,7 +860,7 @@ function route(){
   document.body.classList.remove("full", "sheet");
   var a = APTS.filter(function(x){ return slug(x) === h; })[0];
   document.body.classList.toggle("on-detail", !!a);
-  if (a) { renderDetail(a); window.scrollTo(0, 0); }
+  if (a) { renderDetail(a); window.scrollTo(0, 0); px("track", "ViewContent", aptParams(a)); }
   else if (h === "rent" || h === "sale") {
     if (!((keep || lastView === "detail") && state.deal === h)) state = fresh(h);
     keep = false; renderList(); window.scrollTo(0, back);

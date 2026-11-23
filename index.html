@@ -852,7 +852,7 @@ function aptFromHref(href){
   return APTS.filter(function(x){ return slug(x) === h; })[0] || null;
 }
 var LEADS_URL = "https://script.google.com/macros/s/AKfycbxedFzuNzc2LhS7mqRC06kSxS1MazleYkSlidQE2JXj1IwR4ZEbZ9XqC7eVkeXtBsTJ/exec"; // رابط Google Apps Script (Web app)
-function leadDone(){ try { return localStorage.getItem("aq_lead") === "1"; } catch(e){ return false; } }
+function leadSaved(){ try { return JSON.parse(localStorage.getItem("aq_who") || "{}"); } catch(e){ return {}; } }
 function leadForm(href, a, placement){
   var m = document.getElementById("lm");
   if (!m) {
@@ -884,10 +884,11 @@ function leadForm(href, a, placement){
     var row = {id:id, name:name, phone:ph, code:a ? a.code : "", deal:a ? DEAL[a.deal].name : "", title:a ? title(a) : "", price:a ? a.price : "",
                zone:a ? (a.zone || "") : "", placement:placement, page:location.href};
     if (LEADS_URL) try { fetch(LEADS_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(row)}); } catch(err){}
-    try { localStorage.setItem("aq_lead", "1"); } catch(err){}
+    try { localStorage.setItem("aq_who", JSON.stringify({name:name, phone:ph})); } catch(err){}
     f.hidden = true; ok.hidden = false;
   };
-  m.hidden = false; setTimeout(function(){ document.getElementById("lm-n").focus(); }, 50);
+  var who = leadSaved(); document.getElementById("lm-n").value = who.name || ""; document.getElementById("lm-p").value = who.phone || "";
+  m.hidden = false; setTimeout(function(){ document.getElementById(who.name ? "lm-p" : "lm-n").focus(); }, 50);
 }
 document.addEventListener("click", function(e){
   var l = e.target.closest && e.target.closest("a[href]"); if (!l) return;
@@ -897,7 +898,7 @@ document.addEventListener("click", function(e){
     var a = aptFromHref(href), p = aptParams(a);
     p.placement = l.id || (l.closest(".helpbox,#h-out") ? "help" : l.closest(".stick") ? "sticky" : location.hash.replace("#", "") || "home");
     px("trackCustom", "WhatsAppClick", p);
-    if (!leadDone()) { e.preventDefault(); leadForm(href, a, p.placement); }
+    e.preventDefault(); leadForm(href, a, p.placement);
   } else if (href.indexOf("tel:") === 0) {
     px("trackCustom", "PhoneClick", aptParams(aptFromHref("")));
   }
